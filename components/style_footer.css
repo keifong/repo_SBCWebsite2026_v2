@@ -1,0 +1,40 @@
+.divFooter {
+    padding: 1.5rem;
+    width: auto;
+    height: auto;
+    /* height: clamp(40px, 10vh, 80px); */
+    background-color: #37393A;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    z-index: 500
+}
+
+#div_socialButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+hr {
+    margin-left: 30vw;
+    margin-right: 30vw;
+}
+
+.img_socialMedia {
+    /* height: clamp(20px, 5vw, 100px) */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.div_imgButtons {
+    width: clamp(20px, 3vw, 80px);
+    height: clamp(20px, 3vw, 80px);
+    margin: 0 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
