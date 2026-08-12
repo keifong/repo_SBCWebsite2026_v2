@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import './style_navbar.css'
 //not implemented the page yet, nav bar for admin portal
 

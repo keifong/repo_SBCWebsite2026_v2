@@ -1,4 +1,4 @@
-import "../pages/style_general.css"
+import "../app/globals.css"
 
 type ButtonProps = {
     title: string

@@ -1,8 +1,10 @@
 import './style_footer.css'
-import '../pages/style_general.css'
-import whatsappBtn from '../assets/icons/whatsappButton.png'
-import instaBtn from '../assets/icons/instaButton.png'
-import youtubeBtn from '../assets/icons/youtubeButton.png'
+// import '../pages/style_general.css'
+import '../app/globals.css'
+import whatsappBtn from '../public/icons/whatsappButton.png'
+import instaBtn from '../public/icons/instaButton.png'
+import youtubeBtn from '../public/icons/youtubeButton.png'
+import Image from 'next/image'
 
 function Footer() {
     return (
@@ -12,18 +14,18 @@ function Footer() {
             <div id="div_socialButtons">
                 <div className='div_imgButtons'>
                 <a href="">
-                    <img className="img_socialMedia" src={whatsappBtn}/>
+                    <Image className="img_socialMedia" src={whatsappBtn} alt="WhatsApp" />
                 </a>
                 </div>
                 <div className='div_imgButtons'>
                 <a href="">
-                    <img className="img_socialMedia" src={instaBtn}/>
+                    <Image className="img_socialMedia" src={instaBtn} alt="Instagram" />
                     
                 </a>
                 </div>
                 <div className='div_imgButtons'>
                 <a href="https://youtube.com/@tsbc?si=Pr6etpuOYowuxB2M">
-                    <img className="img_socialMedia" src={youtubeBtn}/>
+                    <Image className="img_socialMedia" src={youtubeBtn} alt="YouTube" />
                 </a>
                 </div>
             </div>

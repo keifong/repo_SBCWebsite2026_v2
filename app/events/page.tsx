@@ -1,3 +1,4 @@
+"use client"
 interface EventItem {
     title: string;
     dateTime: string;
@@ -8,17 +9,18 @@ interface EventItem {
 }
 
 import { useEffect, useState } from 'react'
-import "./style_general.css"
+import '../../app/globals.css'
 import "./style_events.css"
 
-import placeholder1 from "../assets/Photos/events/gifting.png"
-import placeholder2 from "../assets/Photos/events/happy.png"
-import placeholder3 from "../assets/Photos/events/jaydon.png"
-import placeholder4 from "../assets/Photos/events/robes.jpg"
-import brickWall from "../assets/Photos/brickWall.png"
-import brickOutline from "../assets/Photos/brickOutlines.png"
-import Footer from '../components/footer'
-// import Button from '../components/button'
+import placeholder1 from "../../public/events/gifting.png"
+import placeholder2 from "../../public/events/happy.png"
+import placeholder3 from "../../public/events/jaydon.png"
+import placeholder4 from "../../public/events/robes.jpg"
+import brickWall from '../../public/brickWall.png'
+import brickOutline from '../../public/brickOutlines.png'
+import Footer from '../../components/footer'
+
+import Image from 'next/image'
 
 function Events() {
     const [currImage, setCurrImage] = useState(0);
@@ -32,20 +34,6 @@ function Events() {
     // const [searchText, setSearchText] = useState('');
     const [searchText, setSearchText] = useState<string>('');
 
-    // to implement once connected to supabase data
-    // const [loading, setLoading] = useState(true)
-
-
-
-    // const fellowshipMap = {
-    //     "Adult": "adult",
-    //     "Young Adult": "ya",
-    //     "Youth": "y",
-    //     "Kidz": "kidz",
-    //     "Kidz Jr": "kjr",
-    //     "All": null
-    // }
-
     const fellowshipMap: Record<string, string> = {
         "Adult": "adult",
         "Young Adult": "ya",
@@ -54,8 +42,6 @@ function Events() {
         "Kidz Jr": "kjr",
         "All": ""
     }
-    
-    
 
     const carouselImages = [
         placeholder1, 
@@ -413,21 +399,23 @@ function Events() {
     // }
     return (
         <div id='events_wrap'>
-            <img src={brickWall} id='bw1_event'/>
-            <img src={brickWall} id='bw2_event'/>
+            <Image src={brickWall} id='bw1_event' alt="Brick wall" />
+            <Image src={brickWall} id='bw2_event'/>
             <div className='div_row' id='div_eventsTitle'>
                 {/* should i leave the overlay? */}
                 {/* <div id='div_overlay'></div> */}
                 <div className='div_carouselWrapper'>
-                    <img id='img_carousel2' src={carouselImages[currImage]}
+                    <Image id='img_carousel2' src={carouselImages[currImage]}
                         key={currImage}
-                        className={isTransitioning ? 'fade_out': 'fade_in'}></img>
+                        className={isTransitioning ? 'fade_out': 'fade_in'}
+                        alt="Carousel image"
+                        ></Image>
                     </div>
                     <div id='carousel_texts'>
                         <h1>Events for<br/>2026</h1>
                         <p>Disclaimer: This is a tentative skeleton of the events our church will have for this year</p>
                         <p>Subject to addition of events as the year progresses</p>
-                        <img src={brickOutline} id='bo_events'/>
+                        <Image src={brickOutline} id='bo_events' alt="Brick outline" />
                     </div>
             </div>
             <div id='greenSeperator'></div>
@@ -484,7 +472,7 @@ function Events() {
                     <div className='div_column' id='div_eventElement' key={index} onClick={() => {
                         setPopup(myEvent);
                         setCarousel_popupIndex(0);}}>
-                        <img src={myEvent.images[0]}/>
+                        <Image src={myEvent.images[0]} alt={myEvent.title} />
                         <h2>{myEvent.title}</h2>
                         <h3>{myEvent.dateTime}</h3>
                         <p>{myEvent.venue}</p>
@@ -495,7 +483,7 @@ function Events() {
                 <div>
                     <div id='div_overlay_background' onClick={() => setPopup(null)}>
                         <div className='div_column' id='div_popup'>
-                            <img id='popup_primeImage' src={popup.images[0]}></img>
+                            <Image id='popup_primeImage' src={popup.images[0]} alt={popup.title} />
                             <div className='div_row' id='div_overlay_title'>
                                 <div id='div_overlay_header' className='div_column'>
                                     <h1>{popup.title}</h1>
@@ -521,8 +509,8 @@ function Events() {
                                 ))}
                                 </div>
                             </div>  
-                            <img src={brickWall} id='o_bw'/>
-                            <img src={brickWall} id='o_bw2'/>
+                            <Image src={brickWall} id='o_bw' alt="Brick wall" />
+                            <Image src={brickWall} id='o_bw2' alt="Brick wall" />
                         </div>
                         
                     </div>

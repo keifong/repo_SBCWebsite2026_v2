@@ -3,9 +3,9 @@ import '../pages/style_general.css'
 import './style_fpage.css'
 import Button from "../components/button"
 
-import placeholder3 from "../assets/Photos/events/jaydon.png"
-import brickWall from '../assets/Photos/brickWall.png'
-import brickOutline from "../assets/Photos/brickOutlines.png"
+import placeholder3 from "../../public/events/jaydon.png"
+import brickWall from '../../public/brickWall.png'
+import brickOutline from '../../public/brickOutlines.png'
 import Footer from "../components/footer"
 import NavbarWhite from '../components/navbarWhite'
 

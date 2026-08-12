@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import './style_navbar.css'
 
 function NavbarLanding() {
@@ -6,8 +6,8 @@ function NavbarLanding() {
         <div id='divNav'>
             <img src='src/assets/churchLogo/sbc_logoBlack.png'/>
             <nav style={{display:'flex', gap:'1rem'}}>
-                <Link to="/">Back</Link>
-                <Link to="/ContactUs">Contact Us</Link>
+                <Link href="/">Back</Link>
+                <Link href="/ContactUs">Contact Us</Link>
                
             </nav>
         </div>

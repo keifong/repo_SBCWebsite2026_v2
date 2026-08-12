@@ -1,14 +1,13 @@
+"use client"
 import { useEffect, useState } from 'react'
-import Footer from '../components/footer'
+import Footer from '../../components/footer'
 import './style_leadership.css'
-import '../pages/style_general.css'
+import '../../app/globals.css'
 
-import placeholderImage from '../assets/Photos/placeHolderImage.png'
-import christCenter from '../assets/Photos/leadershippg/christcenter.png'
-import brickWall from '../assets/Photos/brickWall.png'
-import brickOutline from '../assets/Photos/brickOutlines.png'
-// steward images
-import deaconDavid from '../assets/Photos/steward1.png'
+import christCenter from '../../public/leadershippg/christcenter.png'
+import brickWall from '../../public/brickWall.png'
+import brickOutline from '../../public/brickOutlines.png'
+import NextImage from 'next/image'
 
 function LeadershipNew() {
     // const [selected, setSelected] = useState(0)
@@ -22,7 +21,7 @@ function LeadershipNew() {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await fetch('/.netlify/functions/getLeadership')
+            const response = await fetch('/api/leadership')
             const data = await response.json()
             console.log('data:', data)
             setStewards(data)
@@ -152,7 +151,7 @@ function LeadershipNew() {
         <div className='div_wrapper'>
             <h1 id='h1_leadership'>Leadership Stewards</h1>
             <div id='div_SBCLeadership'>
-            <img src={christCenter} id='imgCC'/>
+            <NextImage src={christCenter} id='imgCC' alt="Christ Center" />
             {stewards.length > 0 && (
                 <svg
                     id='svg_quarterCircle'
@@ -167,7 +166,7 @@ function LeadershipNew() {
                 />
             )}
             <div className='div_column' id='stewardInfo'>
-                {steward && <img src={steward.iconImg}/>}
+                {steward && <NextImage src={steward.iconImg.trim()} alt={steward.name} width={500} height={500} />}
             </div>
             </div>
 
@@ -188,10 +187,10 @@ function LeadershipNew() {
                                 <p>{steward.description}</p>
                             </div>
                             <div id='div_stewardCarousel'>
-                                <img src={steward.images?.[0]} id='img_stewInDes_mn'/>
+                                <NextImage src={steward.images?.[0]} id='img_stewInDes_mn' alt={steward.name} width={300} height={300}/>
                             </div>
                         </div>
-                        <img src={brickOutline} id='img_leaderBo1'/>
+                        <NextImage src={brickOutline} id='img_leaderBo1' alt="Leader Board" />
                     </div>
                 )
             })()}
