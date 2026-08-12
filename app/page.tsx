@@ -7,6 +7,7 @@ import Link from 'next/link'
 
 import imgCross from "../public/landingPg/crossNew.jpg"
 import NavBarBlack from '../public/churchLogo/sbc_logoBlack.png'
+import Image from 'next/image'
 
 
 function Landing() {
@@ -33,7 +34,7 @@ function Landing() {
         {imgURL && <img id="imgChurchCross" src={imgURL} />}
 
           <div className='div_flexColumn' id="div_welcome">
-            <img src={NavBarBlack} id='img_landingLogo'/>
+            <Image src={NavBarBlack} id='img_landingLogo' alt="Singapore Baptist Church" width={200} height={100}/>
             <p id='welcome'>Hello there!</p>
             <p id='description'>Welcome to a family of practicing believers. Saved by the grace of the Lord Jesus Christ, we in turn extend our hand to you.</p>
             <Link id="btn_enter" href="/home"><Button title="Enter" /></Link>
