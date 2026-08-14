@@ -2,12 +2,14 @@
 import './style_contactUs.css'
 import '../../app/globals.css'
 
-import Footer from '../../components/footer'
 import Button from '../../components/button'
 import Image from 'next/image'
 import brickWall from '../../public/brickWall.png'
 // import brickOutlines from '../../public/brickOutlines.png'
 import { useEffect, useState } from 'react'
+import Link from "next/link";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 // ---------------------------------------------
 // Types

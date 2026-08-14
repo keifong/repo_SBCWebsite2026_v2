@@ -1,4 +1,6 @@
-import FellowshipsPage from '../components/fellowshipsPage'
+// youth fellowships page
+
+import FellowshipsPage from '../../components/fellowshipsPage'
 
 function FellowshipsYouth() {
     return <FellowshipsPage name="Youth Fellowship" color="#254188" tag="youth" showCellGroups={false} 

@@ -1,13 +1,15 @@
+"use client"
 import { useState, useEffect } from "react"
-import '../pages/style_general.css'
+import '../app/globals.css'
 import './style_fpage.css'
 import Button from "../components/button"
 
-import placeholder3 from "../../public/events/jaydon.png"
-import brickWall from '../../public/brickWall.png'
-import brickOutline from '../../public/brickOutlines.png'
+import placeholder3 from "../public/events/jaydon.png"
+import brickWall from '../public/brickWall.png'
+import brickOutline from '../public/brickOutlines.png'
 import Footer from "../components/footer"
 import NavbarWhite from '../components/navbarWhite'
+import Image from "next/image"
 
 type FellowshipProps ={
     name: string
@@ -34,7 +36,7 @@ function FellowshipsPage({name, color, tag, showCellGroups, info, cellgroups, cg
     useEffect(()=> {    
         const fetchData = async () => {
             try {
-                const response = await fetch(`/.netlify/functions/getFellowships?tag=${tag}`)
+                const response = await fetch(`/api/fellowships`)
                 const data = await response.json()
                 setFellowshipData(data[0])
             } catch (err) {
@@ -76,12 +78,12 @@ function FellowshipsPage({name, color, tag, showCellGroups, info, cellgroups, cg
                     )}
                 </div>
                 <div className="div_row" id="faInfo">
-                        <img src={placeholder3} id="faPh"/>
+                        <Image src={placeholder3} alt="Placeholder" id="faPh"/>
                         <div className="div_column" id="wwd">
                             <h3 style={{color: color}}>WHAT WE DO</h3>
                             <h5 style={{color: color}}>{info[1]}</h5>
                             <p>{info[2]}</p>
-                            <img src={brickWall} id="img_faBo1"/>
+                            <Image src={brickWall} alt="Brick Wall" id="img_faBo1"/>
                             <Button title="Reach Out"/>
                         </div>
                 </div>
@@ -105,9 +107,9 @@ function FellowshipsPage({name, color, tag, showCellGroups, info, cellgroups, cg
                 <div className="div_row" id="faInfo">
                         <div className="div_column" id="wwd">
                             <p>{cgTexts[selectedCG]}</p>
-                            <img src={brickWall} id="img_faBo2"/>
+                            <Image src={brickWall} alt="Brick Wall" id="img_faBo2"/>
                         </div>
-                        <img src={placeholder3} id="faPh"/>
+                        <Image src={placeholder3} alt="Placeholder" id="faPh"/>
                 </div>
                <div className="div_column" id="div_upcoming">
                     <h3>Upcoming</h3>
@@ -125,8 +127,8 @@ function FellowshipsPage({name, color, tag, showCellGroups, info, cellgroups, cg
                     </div>
                 </div>
                 <div id="div_imgSection" style={{backgroundColor: color}}>
-                    <img src={brickOutline} id="faBO1"/>
-                    <img src={brickOutline} id="faBO2"/>
+                    <Image src={brickOutline} alt="Brick Outline" id="faBO1"/>
+                    <Image src={brickOutline} alt="Brick Outline" id="faBO2"/>
                     img section
                 </div>
                 <Footer/>

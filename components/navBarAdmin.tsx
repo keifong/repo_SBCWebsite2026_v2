@@ -5,16 +5,16 @@ import './style_navbar.css'
 function NavbarAdmin() {
     return(
         <div id='divNav'>
-            <Link to="/HomeAdmin">
+            <Link href="/HomeAdmin">
                 <img src='src/assets/churchLogo/sbc_logoBlack.png'/>
             </Link>
             <nav style={{display:'flex', gap:'1rem'}}>
-                <Link to='/Home'>User Home</Link>
-                <Link to="/Fellowships">Fellowships</Link>
-                <Link to="/Leadership">Leadership Stewards</Link>
-                <Link to="/Events">Events</Link>
-                <Link to="/AboutUs">About Us</Link>
-                <Link to="/ContactUs">Contact Us</Link>
+                <Link href='/Home'>User Home</Link>
+                <Link href="/Fellowships">Fellowships</Link>
+                <Link href="/Leadership">Leadership Stewards</Link>
+                <Link href="/Events">Events</Link>
+                <Link href="/AboutUs">About Us</Link>
+                <Link href="/ContactUs">Contact Us</Link>
             </nav>
         </div>
     )

@@ -18,7 +18,9 @@ import placeholder3 from "../../public/events/jaydon.png"
 import placeholder4 from "../../public/events/robes.jpg"
 import brickWall from '../../public/brickWall.png'
 import brickOutline from '../../public/brickOutlines.png'
-import Footer from '../../components/footer'
+import Link from "next/link";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 import Image from 'next/image'
 
