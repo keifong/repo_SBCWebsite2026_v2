@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 interface EventItem {
     title: string;
     dateTime: string;
@@ -8,21 +9,17 @@ interface EventItem {
     images: string[];
 }
 
-import { useEffect, useState } from 'react'
-import '../../app/globals.css'
-import "./style_events.css"
+import { useEffect, useState } from "react";
+import styles from "./events.module.css";
 
-import placeholder1 from "../../public/events/gifting.png"
-import placeholder2 from "../../public/events/happy.png"
-import placeholder3 from "../../public/events/jaydon.png"
-import placeholder4 from "../../public/events/robes.jpg"
-import brickWall from '../../public/brickWall.png'
-import brickOutline from '../../public/brickOutlines.png'
-import Link from "next/link";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import placeholder1 from "@/public/events/gifting.png";
+import placeholder2 from "@/public/events/happy.png";
+import placeholder3 from "@/public/events/jaydon.png";
+import placeholder4 from "@/public/events/robes.jpg";
+import brickWall from "@/public/brickWall.png";
+import brickOutline from "@/public/brickOutlines.png";
 
-import Image from 'next/image'
+import Image from "next/image";
 
 function Events() {
     const [currImage, setCurrImage] = useState(0);
@@ -400,56 +397,111 @@ function Events() {
     //     )
     // }
     return (
-        <div id='events_wrap'>
-            <Image src={brickWall} id='bw1_event' alt="Brick wall" />
-            <Image src={brickWall} id='bw2_event'/>
-            <div className='div_row' id='div_eventsTitle'>
+        <div className={styles.events_wrap}>
+            <Image
+                src={brickWall}
+                className={styles.bw1_event}
+                alt="Brick wall"
+                width={100}
+                height={100}
+            />
+
+            <Image
+                src={brickWall}
+                className={styles.bw2_event}
+                alt="Brick wall"
+                width={100}
+                height={100}
+            />
+            <div className={`div_row ${styles.div_eventsTitle}`}>
                 {/* should i leave the overlay? */}
                 {/* <div id='div_overlay'></div> */}
-                <div className='div_carouselWrapper'>
-                    <Image id='img_carousel2' src={carouselImages[currImage]}
+                <div className={styles.div_carouselWrapper}>
+                    <Image
+                        className={`${styles.img_carousel2} ${
+                            isTransitioning
+                                ? styles.fade_out
+                                : styles.fade_in
+                        }`}
+                        src={carouselImages[currImage]}
                         key={currImage}
-                        className={isTransitioning ? 'fade_out': 'fade_in'}
                         alt="Carousel image"
-                        ></Image>
+                        width={100}
+                        height={100}
+                    />
                     </div>
-                    <div id='carousel_texts'>
+                    <div className={styles.carousel_texts}>
                         <h1>Events for<br/>2026</h1>
                         <p>Disclaimer: This is a tentative skeleton of the events our church will have for this year</p>
                         <p>Subject to addition of events as the year progresses</p>
-                        <Image src={brickOutline} id='bo_events' alt="Brick outline" />
+                        <Image
+                            src={brickOutline}
+                            className={styles.bo_events}
+                            alt="Brick outline"
+                            width={100}
+                            height={100}
+                        />
                     </div>
             </div>
             <div id='greenSeperator'></div>
                 {/* <div id='div_progressGrower'>progress grower</div> */}
                 {/* step 2 */}
-                <div id='div_eventsProgressBar'>
-                    <div id='div_timeline_line'>
-                        <div id='div_progressFill' style={{ width: `${progressPercent}%` }}></div>
+                <div className={styles.div_eventsProgressBar}>
+                    <div className={styles.div_timeline_line}>
+                        <div
+                            className={styles.div_progressFill}
+                            style={{ width: `${progressPercent}%` }}
+                        />
                     </div>
                     
                     {sortedEvents.map((event, index) => (
-                        <div 
-                            className={`div_timelineNode ${index % 2 === 0 ? 'node_above' : 'node_below'} `}
+                        <div
+                            className={`${styles.div_timelineNode} ${
+                                index % 2 === 0
+                                    ? styles.node_above
+                                    : styles.node_below
+                            }`}
                             key={index}
-                            style={{ left: `${(index / (sortedEvents.length - 1)) * 100}%` }}
+                            style={{
+                                left: `${
+                                    (index / (sortedEvents.length - 1)) * 100
+                                }%`,
+                            }}
                         >
-                            <div className='node_dot'></div>
-                            <div id="div_pbdetails" className={`${parseDate(event.dateTime) <= today ? 'node_past' : 'node_future'}`}>
-                                <div className='node_label'>{event.title}</div>
-                                <div className='node_dt'>{event.dateTime}</div>
+                            <div className={styles.node_dot} />
+                            <div className={`${styles.div_pbdetails} ${
+                                    parseDate(event.dateTime) <= today
+                                        ? styles.node_past
+                                        : styles.node_future
+                                }`}>
+                                <div className={styles.node_label}>
+                                    {event.title}
+                                </div>
+
+                                <div className={styles.node_dt}>
+                                    {event.dateTime}
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
-            <div className='div_row' id='div_legends_search'>
-                <div className='div_column'>
-                    <h4 id='filterby'>Filter By</h4>
-                    <div className='div_row' id='div_fellowbtns'>
+            <div className={`div_row ${styles.div_legends_search}`}>
+                <div className="div_column">
+                    <h4 className={styles.filterby}>
+                        Filter By
+                    </h4>
+
+                    <div
+                        className={`div_row ${styles.div_fellowbtns}`}
+                    >
                         {fellowshipsList.map((fellowship, index) => (
                             <button
                                 key={index}
-                                className={`fellowship_btn ${selFellowship === fellowshipMap[fellowship.name] ? 'fellowship_btn_selected' : ''}`}
+                                className={`${styles.fellowship_btn} ${
+                                    selFellowship === fellowshipMap[fellowship.name]
+                                        ? styles.fellowship_btn_selected
+                                        : ''
+                                }`}
                                 style={{backgroundColor: fellowship.bgColour}}
                                 onClick={() => {
                                     setSearchText(''),
@@ -462,19 +514,29 @@ function Events() {
                         ))}
                     </div>
                 </div>
-                <input placeholder='search' id='input_search' value={searchText} onChange={(e) => setSearchText(e.target.value)}></input>
+                <input
+                    placeholder="search"
+                    className={styles.input_search}
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                />
                 {/* <img src={brickWall} id='bw1_event'/> */}
             </div>
-            <div id='div_chart'></div>
-            <div className='div_row' id='div_eventsListings'>
+            {/* <div id='div_chart'></div> */}
+            <div className={`div_row ${styles.div_eventsListings}`}>
                 {/* {events.map((myEvent, index) => ( */}
                 
                 {/* {sortedEvents.map((myEvent, index) => ( */}
                 {filteredEvents.map((myEvent, index) => (
-                    <div className='div_column' id='div_eventElement' key={index} onClick={() => {
-                        setPopup(myEvent);
-                        setCarousel_popupIndex(0);}}>
-                        <Image src={myEvent.images[0]} alt={myEvent.title} />
+                    <div
+                        className={`div_column ${styles.div_eventElement}`}
+                        key={index}
+                        onClick={() => {
+                            setPopup(myEvent);
+                            setCarousel_popupIndex(0);
+                        }}
+                    >
+                        <Image src={myEvent.images[0]} alt={myEvent.title} width={100} height={100} />
                         <h2>{myEvent.title}</h2>
                         <h3>{myEvent.dateTime}</h3>
                         <p>{myEvent.venue}</p>
@@ -483,42 +545,68 @@ function Events() {
             </div>
             {popup && (
                 <div>
-                    <div id='div_overlay_background' onClick={() => setPopup(null)}>
-                        <div className='div_column' id='div_popup'>
-                            <Image id='popup_primeImage' src={popup.images[0]} alt={popup.title} />
-                            <div className='div_row' id='div_overlay_title'>
-                                <div id='div_overlay_header' className='div_column'>
+                    <div
+                        className={styles.div_overlay_background}
+                        onClick={() => setPopup(null)}
+                    >
+                        <div className={`div_column ${styles.div_popup}`}>
+                            <Image
+                                className={styles.popup_primeImage}
+                                src={popup.images[0]}
+                                alt={popup.title}
+                                width={100}
+                                height={100}
+                            />
+                            <div className={`div_row ${styles.div_overlay_title}`}>
+                                <div className={`div_column ${styles.div_overlay_header}`}>
                                     <h1>{popup.title}</h1>
                                     <h3>{popup.dateTime}</h3>
                                     <h3>Venue: {popup.venue}</h3>
                                 </div>
                                 {/* add fellowship tag */}
-                                <button id='btn_overlayCU'>Contact Us</button>
+                                <button className={styles.btn_overlayCU}>Contact Us</button>
                             </div>
-                            <p id='p_overlay_des'>{popup.description}</p>
+                            <p className={styles.p_overlay_des}>{popup.description}</p>
                             <h3 style={{fontFamily: 'Oxygen'}}>Take a look</h3>
-                            <div className='div_row' id='div_overlay_carousel'>
-                                <div className='carousel-track-popup' 
+                            <div className={styles.div_overlay_carousel}>
+                                <div
+                                    className={styles.carousel_track_popup}
                                     style={{
-                                        transform: `translateX(-${carousel_popupIndex * 12}vw)`,
-                                        transition: 'transform 0.5s ease-in-out'
-                                }}>
-                                {/* {popup.images.map((img, index) => (
-                                    <img src={img} key={index} id='img_popup_carou'/>
-                                ))} */}
-                                {popup.images.map((img: string, index: number) => (
-                                    <img src={img} key={index} id='img_popup_carou'/>
-                                ))}
+                                        transform: `translateX(-${carousel_popupIndex * 15}vw)`,
+                                    }}
+                                >
+                                    {popup.images.map((img: string, index: number) => (
+                                        <Image
+                                            src={img}
+                                            key={index}
+                                            alt="popup carousel image"
+                                            className={styles.img_popup_carou}
+                                            width={100}
+                                            height={100}
+                                        />
+                                    ))}
                                 </div>
-                            </div>  
-                            <Image src={brickWall} id='o_bw' alt="Brick wall" />
-                            <Image src={brickWall} id='o_bw2' alt="Brick wall" />
+                            </div>
+                            <Image
+                                src={brickWall}
+                                className={styles.o_bw}
+                                alt="Brick wall"
+                                width={100}
+                                height={100}
+                            />
+
+                            <Image
+                                src={brickWall}
+                                className={styles.o_bw2}
+                                alt="Brick wall"
+                                width={100}
+                                height={100}
+                            />
                         </div>
                         
                     </div>
                 </div>
             )}
-            <Footer/>
         </div>
     )
 }

@@ -1,110 +1,134 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import "./style_navbar.css";
+import { useState, useEffect, useRef } from "react";
+import styles from "./navbarWhite.module.css";
+import Image from "next/image";
 
-function NavbarWhite() {
-    const [navOpacity, setNavOpacity] = useState(0);
-    const [showFellowship, setShowFellowship] = useState(false);
+function Navbar() {
+  const [navOpacity, setNavOpacity] = useState(0);
+  const [showFellowship, setShowFellowship] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
+  const lastScrollY = useRef(0);
 
-            // When scrollY is 0, opacity is 0.
-            // When scrollY is 100, opacity approaches 0.3.
-            const opacity = Math.min((scrollY / 100) * 0.5, 0.3);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
 
-            setNavOpacity(opacity);
-        };
+      // Navbar opacity
+      const opacity = Math.min((scrollY / 100) * 0.5, 0.3);
+      setNavOpacity(opacity);
 
-        window.addEventListener("scroll", handleScroll);
+      // Always show navbar at the top
+      if (scrollY <= 50) {
+        setNavVisible(true);
+      }
 
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
+      // Scrolling up
+      else if (scrollY < lastScrollY.current) {
+        setNavVisible(true);
+      }
 
-    return (
-        <div
-            id="divNav_white"
-            style={{
-                backgroundColor: `rgba(0, 0, 0, ${navOpacity})`,
-            }}
+      // Scrolling down
+      else if (scrollY > lastScrollY.current) {
+        setNavVisible(false);
+      }
+
+      lastScrollY.current = scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div
+      className={`${styles.navbar} ${
+        navVisible
+          ? styles.navbar_visible
+          : styles.navbar_hidden
+      }`}
+      style={{
+        backgroundColor: `rgba(0, 0, 0, ${navOpacity})`,
+      }}
+    >
+      <Link href="/home">
+        <Image
+        //   src="/churchLogo/sbc_logoBlack.png"
+          src="/churchLogo/sbc_logoBlack.png"
+          alt="Singapore Baptist Church"
+          width={200}
+          height={60}
+        />
+      </Link>
+
+      <nav
+        style={{ display: "flex", gap: "1rem" }}
+        className={styles.navbarNav}
+      >
+        <h4
+          onMouseEnter={() => setShowFellowship(true)}
+          onMouseLeave={() => setShowFellowship(false)}
         >
-            <Link href="/home">
-                <img
-                    src="/churchLogo/sbc_logoWhite.png"
-                    alt="Singapore Baptist Church"
-                />
-            </Link>
+          Fellowships
 
-            <nav
-                style={{
-                    display: "flex",
-                    gap: "1rem",
-                }}
-                id="navbar"
+          {showFellowship && (
+            <div
+              className={styles.div_fellowshipDropdown}
+              onMouseEnter={() => setShowFellowship(true)}
+              onMouseLeave={() => setShowFellowship(false)}
             >
-                <h4
-                    onMouseEnter={() => setShowFellowship(true)}
-                    onMouseLeave={() => setShowFellowship(false)}
-                >
-                    Fellowships
+              <Link
+                href="/fellowshipsAdult"
+                className={styles.flink_btn}
+              >
+                Adult
+              </Link>
 
-                    {showFellowship && (
-                        <div id="div_fellowshipDropdown">
-                            <Link
-                                href="/fellowshipsAdult"
-                                className="link_btn"
-                            >
-                                Adult
-                            </Link>
+              <Link
+                href="/fellowshipsYA"
+                className={styles.flink_btn}
+              >
+                Young Adult
+              </Link>
 
-                            <Link
-                                href="/fellowshipsYA"
-                                className="link_btn"
-                            >
-                                Young Adult
-                            </Link>
+              <Link
+                href="/fellowshipsYouth"
+                className={styles.flink_btn}
+              >
+                Youth
+              </Link>
 
-                            <Link
-                                href="/fellowshipsYouth"
-                                className="link_btn"
-                            >
-                                Youth
-                            </Link>
+              <Link
+                href="/fellowshipsKidz"
+                className={styles.flink_btn}
+              >
+                Kidz
+              </Link>
+            </div>
+          )}
+        </h4>
 
-                            <Link
-                                href="/fellowshipsKidz"
-                                className="link_btn"
-                            >
-                                Kidz
-                            </Link>
-                        </div>
-                    )}
-                </h4>
+        <Link href="/events" className={styles.link_btn}>
+          Events
+        </Link>
 
-                <Link href="/events" className="link_btn">
-                    Events
-                </Link>
+        <Link href="/aboutUs" className={styles.link_btn}>
+          About Us
+        </Link>
 
-                <Link href="/aboutUs" className="link_btn">
-                    About Us
-                </Link>
+        <Link href="/contactUs" className={styles.link_btn}>
+          Contact Us
+        </Link>
 
-                <Link href="/contactUs" className="link_btn">
-                    Contact Us
-                </Link>
-
-                {/* Temporary */}
-                <Link href="/leadership" className="link_btn">
-                    Leadership
-                </Link>
-            </nav>
-        </div>
-    );
+        <Link href="/leadership" className={styles.link_btn}>
+          Leadership
+        </Link>
+      </nav>
+    </div>
+  );
 }
 
-export default NavbarWhite;
+export default Navbar;

@@ -3,18 +3,21 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-import "./style_home.css";
+// import "./style_home.css";
+import styles from "./home.module.css";
 
-import Footer from "@/components/footer";
-import NavbarWhite from "@/components/navbarWhite";
+// import Footer from "@/components/footer";
+// import NavbarWhite from "@/components/navbarWhite";
 import HomeButton from "@/components/homeButton";
 import Button from "@/components/button";
 
-import brickWall from "../../public/brickWall.png";
-import bl1 from "../../public/home/brickLines1.png";
-import bl2 from "../../public/home/brickLines2.png";
-import bl3 from "../../public/home/brickLines3.png";
-import brickLines from "../../public/brickOutlines.png";
+import brickWall from "@/public/brickWall.png";
+// import bl1 from "../../public/home/brickLines1.png";
+import bl1 from "@/public/home/brickLines1.png";
+import bl2 from "@/public/home/brickLines2.png";
+import bl3 from "@/public/home/brickLines3.png";
+import brickLines from "@/public/brickOutlines.png";
+import Image from "next/image";
 
 function Home() {
     const [currImage, setCurrImage] = useState(0);
@@ -94,12 +97,12 @@ function Home() {
 
     return (
         <>
-            <div className="div_wrapper_home">
+            <div className={styles.div_wrapper_home}>
 
-                <NavbarWhite />
+                {/* <NavbarWhite /> */}
 
                 {/* Background image */}
-                <div id="img_bg">
+                <div className={styles.img_bg}>
                     {yay && (
                         <img
                             src={yay}
@@ -109,19 +112,19 @@ function Home() {
                 </div>
 
                 <div className="div_column">
+                    <div className={styles.div_home_2nd}>
 
-                    {/* Welcome section */}
-                    <div className="div_column" id="div_home_2nd">
+                        <div className={styles.div_title}>
 
-                        <div className="div_column" id="div_title">
-
-                            <img
+                            <Image
                                 src={brickWall}
-                                id="home_bw1"
+                                className={styles.home_bw1}
                                 alt=""
+                                width={300}
+                                height={200}    
                             />
 
-                            <h3 id="h3_welcome">
+                            <h3 className={styles.h3_welcome}>
                                 WELCOME TO
                             </h3>
 
@@ -131,23 +134,22 @@ function Home() {
                                 BAPTIST CHURCH
                             </h1>
 
-                            <h3 id="h3_cn">
+                            <h3 className={styles.h3_cn}>
                                 新加坡浸信教会
                             </h3>
 
-                            <img
+                            <Image
                                 src={brickWall}
-                                id="home_bw2"
+                                className={styles.home_bw2}
                                 alt=""
+                                width={300}
+                                height={200}
                             />
 
                         </div>
 
                         {/* Home buttons */}
-                        <div
-                            className="div_row"
-                            id="div_btns_home"
-                        >
+                        <div className={`div_row ${styles.div_btns_home}`}>
 
                             <Link
                                 href="/leadership"
@@ -216,98 +218,70 @@ function Home() {
                     <div id="greenSeperator" />
 
                     {/* Service Timing */}
-                    <div
-                        className="div_row"
-                        id="div_mission"
-                    >
-
-                        <img
+                    <div className={`div_row ${styles.div_mission}`}>
+                        <Image
                             src={bl1}
-                            id="home_bl1_1"
+                            className={styles.home_bl1_1}
                             alt=""
+                            width={300}
+                            height={200}
                         />
 
-                        <img
+                        <Image
                             src={bl2}
-                            id="home_bl2"
+                            className={styles.home_bl2}
                             alt=""
+                            width={300}
+                            height={200}
                         />
 
-                        <img
+                        <Image
                             src={bl3}
-                            id="home_bl3"
+                            className={styles.home_bl3}
                             alt=""
+                            width={300}
+                            height={200}
                         />
 
-                        <div
-                            className="div_column"
-                            id="div_serviceTiming"
-                        >
-
-                            <h1>
-                                Join Us in Worship
-                            </h1>
-
-                            <h3>
-                                Every Sunday
-                            </h3>
-
-                            <h3>
-                                10.30am - 12pm
-                            </h3>
-
-                            <p>
-                                Fellowship with us afterwards through Lunch
-                            </p>
-
-                            <p id="freep_freel">
-                                Free Parking, Free Lunch
-                            </p>
-
+                        <div className={styles.div_serviceTiming}>
+                            <h1>Join Us in Worship</h1>
+                            <h3>Every Sunday</h3>
+                            <h3>10.30am - 12pm</h3>
+                            <p>Fellowship with us afterwards through Lunch</p>
+                            <p className={styles.freep_freel}>Free Parking, Free Lunch</p>
                         </div>
 
-                        {prayer && (
-                            <img
-                                src={prayer}
-                                id="img_missionImg"
-                                alt="Church fellowship"
-                            />
-                        )}
-
+                        <Image
+                            src={prayer}
+                            className={styles.img_missionImg}
+                            alt="Prayer at Singapore Baptist Church"
+                            width={300}
+                            height={200}
+                        />
                     </div>
 
                     {/* Contact Us */}
-                    <div
-                        className="div_row"
-                        id="div_mission"
-                    >
+                    <div className={`div_row ${styles.div_mission}`}>
+                        <Image
+                            src={liftConstruction}
+                            className={styles.img_missionImg}
+                            alt="Singapore Baptist Church"
+                            width={300}
+                            height={200}
+                        />
 
-                        {liftConstruction && (
-                            <img
-                                src={liftConstruction}
-                                id="img_missionImg"
-                                alt="Singapore Baptist Church"
-                            />
-                        )}
+                        <div className={styles.div_cuText}>
 
-                        <div
-                            className="div_column"
-                            id="div_cuText"
-                        >
-
-                            <img
+                            <Image
                                 src={brickLines}
-                                id="cuText_bl"
+                                className={styles.cuText_bl}
                                 alt=""
+                                width={300}
+                                height={200}
                             />
 
-                            <h2>
-                                Contact Us
-                            </h2>
-
-                            <h4>
-                                1 Cambridge Rd, Singapore 219677
-                            </h4>
+                            <h2>Contact Us</h2>
+                            <h4>1 Cambridge Rd, Singapore 219677</h4>
 
                             <p>
                                 Office Hours:
@@ -317,21 +291,10 @@ function Home() {
                                 Saturdays: 9.00am to 1.00pm
                             </p>
 
-                            <div
-                                className="div_row"
-                                id="div_tel"
-                            >
-
+                            <div className={`div_row ${styles.div_tel}`}>
                                 <div className="div_column">
-
-                                    <p className="tel">
-                                        Tel: 62993845
-                                    </p>
-
-                                    <p className="tel">
-                                        Fax: 62938946
-                                    </p>
-
+                                    <p className={styles.tel}>Tel: 62993845</p>
+                                    <p className={styles.tel}>Fax: 62938946</p>
                                 </div>
 
                                 <Link
@@ -340,18 +303,11 @@ function Home() {
                                 >
                                     <Button title="CONTACT US" />
                                 </Link>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
-                <Footer />
-
-            </div>
+            </div>    
         </>
     );
 }

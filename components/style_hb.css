@@ -11,6 +11,8 @@
     border-radius: 1vw;
     text-align: center;
     background-color: #FFFFFF;
+    position: relative;
+    z-index: 3;
 }
 
 #div_HB:hover {
@@ -19,6 +21,7 @@
 
 #div_HB img {
     width: 100%;
+    height: auto;
 }
 
 #div_HB h3 {

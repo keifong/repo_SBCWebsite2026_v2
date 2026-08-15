@@ -1,23 +1,41 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import "./style_navbar.css";
+import { useState, useEffect, useRef } from "react";
+import styles from "./navbar.module.css";
 import Image from "next/image";
 
 function Navbar() {
   const [navOpacity, setNavOpacity] = useState(0);
   const [showFellowship, setShowFellowship] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
+
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
 
-      // When scrollY is 0, opacity is 0.
-      // When scrollY is 100, opacity increases.
+      // Navbar opacity
       const opacity = Math.min((scrollY / 100) * 0.5, 0.3);
-
       setNavOpacity(opacity);
+
+      // Always show navbar at the top
+      if (scrollY <= 50) {
+        setNavVisible(true);
+      }
+
+      // Scrolling up
+      else if (scrollY < lastScrollY.current) {
+        setNavVisible(true);
+      }
+
+      // Scrolling down
+      else if (scrollY > lastScrollY.current) {
+        setNavVisible(false);
+      }
+
+      lastScrollY.current = scrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -27,7 +45,11 @@ function Navbar() {
 
   return (
     <div
-      id="divNav"
+      className={`${styles.navbar} ${
+        navVisible
+          ? styles.navbar_visible
+          : styles.navbar_hidden
+      }`}
       style={{
         backgroundColor: `rgba(0, 0, 0, ${navOpacity})`,
       }}
@@ -37,13 +59,13 @@ function Navbar() {
           src="/churchLogo/sbc_logoBlack.png"
           alt="Singapore Baptist Church"
           width={200}
-          height={100}
+          height={60}
         />
       </Link>
 
       <nav
         style={{ display: "flex", gap: "1rem" }}
-        id="navbar"
+        className={styles.navbarNav}
       >
         <h4
           onMouseEnter={() => setShowFellowship(true)}
@@ -53,42 +75,54 @@ function Navbar() {
 
           {showFellowship && (
             <div
-              id="div_fellowshipDropdown"
+              className={styles.div_fellowshipDropdown}
               onMouseEnter={() => setShowFellowship(true)}
               onMouseLeave={() => setShowFellowship(false)}
             >
-              <Link href="/fellowshipsAdult" className="link_btn">
+              <Link
+                href="/fellowshipsAdult"
+                className={styles.link_btn}
+              >
                 Adult
               </Link>
 
-              <Link href="/fellowshipsYA" className="link_btn">
+              <Link
+                href="/fellowshipsYA"
+                className={styles.link_btn}
+              >
                 Young Adult
               </Link>
 
-              <Link href="/fellowshipsYouth" className="link_btn">
+              <Link
+                href="/fellowshipsYouth"
+                className={styles.link_btn}
+              >
                 Youth
               </Link>
 
-              <Link href="/fellowshipsKidz" className="link_btn">
+              <Link
+                href="/fellowshipsKidz"
+                className={styles.link_btn}
+              >
                 Kidz
               </Link>
             </div>
           )}
         </h4>
 
-        <Link href="/events" className="link_btn">
+        <Link href="/events" className={styles.link_btn}>
           Events
         </Link>
 
-        <Link href="/aboutUs" className="link_btn">
+        <Link href="/aboutUs" className={styles.link_btn}>
           About Us
         </Link>
 
-        <Link href="/contactUs" className="link_btn">
+        <Link href="/contactUs" className={styles.link_btn}>
           Contact Us
         </Link>
 
-        <Link href="/leadership" className="link_btn">
+        <Link href="/leadership" className={styles.link_btn}>
           Leadership
         </Link>
       </nav>

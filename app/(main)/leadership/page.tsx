@@ -1,12 +1,12 @@
 "use client"
 import { useEffect, useState } from 'react'
-import Footer from '../../components/footer'
+import Footer from '@/components/footer'
 import './style_leadership.css'
-import '../../app/globals.css'
+import '@/app/globals.css'
 
-import christCenter from '../../public/leadershippg/christcenter.png'
-import brickWall from '../../public/brickWall.png'
-import brickOutline from '../../public/brickOutlines.png'
+import christCenter from '@/public/leadershippg/christcenter.png'
+import brickWall from '@/public/brickWall.png'
+import brickOutline from '@/public/brickOutlines.png'
 import NextImage from 'next/image'
 
 function LeadershipNew() {

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import WhiteNavbar from "@/components/navbarWhite";
 
 export const metadata: Metadata = {
     title: "Singapore Baptist Church",
@@ -16,8 +14,8 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
+                <WhiteNavbar/>
                 {children}
-                <Footer/>
             </body>
         </html>
     );

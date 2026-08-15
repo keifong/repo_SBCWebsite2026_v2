@@ -29,18 +29,17 @@ function Landing() {
   
   return (
     <>
+        <div className="div_flexRow" id="div_content">
+          {imgURL && <Image id="imgChurchCross" src={imgURL} alt="Church Cross" width={300} height={600} />}
 
-      <div className="div_flexRow" id="div_content">
-        {imgURL && <img id="imgChurchCross" src={imgURL} />}
-
-          <div className='div_flexColumn' id="div_welcome">
-            <Image src={NavBarBlack} id='img_landingLogo' alt="Singapore Baptist Church" width={200} height={100}/>
-            <p id='welcome'>Hello there!</p>
-            <p id='description'>Welcome to a family of practicing believers. Saved by the grace of the Lord Jesus Christ, we in turn extend our hand to you.</p>
-            <Link id="btn_enter" href="/home"><Button title="Enter" /></Link>
-            
-          </div>
-      </div>
+            <div className='div_flexColumn' id="div_welcome">
+              <Image src={NavBarBlack} id='img_landingLogo' alt="Singapore Baptist Church" width={300} height={50}/>
+              <p id='welcome'>Hello there!</p>
+              <p id='description'>Welcome to a family of practicing believers. Saved by the grace of the Lord Jesus Christ, we in turn extend our hand to you.</p>
+              <Link id="btn_enter" href="/home"><Button title="Enter" /></Link>
+              
+            </div>
+        </div>
     </>
   )
 }

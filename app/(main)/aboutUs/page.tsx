@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 function AboutUs() {
     return (
         <div className={styles.page}>
-            <Navbar />
+            {/* <Navbar /> */}
 
             <main>
                 <section className={styles.hero}>
@@ -42,7 +42,6 @@ function AboutUs() {
                 </section>
             </main>
 
-            <Footer />
         </div>
     );
 }
