@@ -1,0 +1,93 @@
+.div_content {
+    /* flex: 1; takes all available space above footer */
+    display: flex;
+    justify-content:space-between;
+    /* margin-right: 20vw; */
+    container-type: inline-size;
+}
+
+.img_landingLogo {
+    width: 20vw;
+    height: auto;
+    padding-bottom: 1vw;
+}
+
+.div_welcome {
+    /* width: 25vw; */
+    width: 50%;
+    align-self: center;
+    padding-left: 5vw;
+    padding-right: 5vw ;
+    flex: 1;
+} 
+
+
+.welcome {
+    font-family: 'Martel Sans Reg';
+    line-height: 1.1;
+    font-size: 3rem;
+    font-size: clamp(10px, 4vw, 150px);
+    margin-bottom: 0.25rem;
+    margin-top: 0;
+}
+
+.description {
+    font-family: 'Martel Sans Light';
+    font-size: 1.2rem;
+    font-size: clamp(10px, 1.5vw, 100px);
+    width: 70%;
+    line-height: 1.1;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+.imgChurchCross {
+    flex: 1;
+    min-width: 0;           /* prevents flex blowout */
+    width: 100%;
+    max-height: 75vh;       /* caps it so it never overflows the screen */
+    padding-right: 5vw;
+    object-fit: contain;    /* keeps full image, no cropping */
+    align-self: flex-end;   /* sticks to bottom */
+    object-position: left;
+}
+
+.btn_enter {
+    padding-top: 2vh;
+}
+
+/* when screen is 768px or smaller */
+@media (max-width: 768px) {
+    .div_content {
+        flex-direction: column;
+        align-items: center;
+        padding: 5vw;
+        padding-top: 7vw;
+        position: relative;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .imgChurchCross {
+        width: 70vw;
+        align-self: center;
+        object-position: center;
+    }
+
+    .div_welcome {
+        width: 70%;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 1vw;
+        padding: 2vw;
+        box-sizing: border-box;
+    }
+}
+

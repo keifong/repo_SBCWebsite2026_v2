@@ -14,7 +14,7 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      const scrollY = window.scrollY; 
 
       // Navbar opacity
       const opacity = Math.min((scrollY / 100) * 0.5, 0.3);
@@ -24,12 +24,10 @@ function Navbar() {
       if (scrollY <= 50) {
         setNavVisible(true);
       }
-
       // Scrolling up
       else if (scrollY < lastScrollY.current) {
         setNavVisible(true);
       }
-
       // Scrolling down
       else if (scrollY > lastScrollY.current) {
         setNavVisible(false);

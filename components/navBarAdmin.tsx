@@ -4,7 +4,7 @@ import './style_navbar.css'
 
 function NavbarAdmin() {
     return(
-        <div id='divNav'>
+        <div className='divNav'>
             <Link href="/HomeAdmin">
                 <img src='src/assets/churchLogo/sbc_logoBlack.png'/>
             </Link>

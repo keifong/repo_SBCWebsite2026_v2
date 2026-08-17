@@ -443,7 +443,7 @@ function Events() {
                         />
                     </div>
             </div>
-            <div id='greenSeperator'></div>
+            <div className='greenSeperator'></div>
                 {/* <div id='div_progressGrower'>progress grower</div> */}
                 {/* step 2 */}
                 <div className={styles.div_eventsProgressBar}>

@@ -1,4 +1,4 @@
-#div_HB {
+.div_HB {
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
     padding-top: 3vw;
     padding-bottom: 3vw;
@@ -15,16 +15,16 @@
     z-index: 3;
 }
 
-#div_HB:hover {
+.div_HB:hover {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-#div_HB img {
+.div_HB img {
     width: 100%;
     height: auto;
 }
 
-#div_HB h3 {
+.div_HB h3 {
     margin: 0;
     font-family: 'Martel Sans SemiB';
     font-size: clamp(5px, 1.5vw, 50px);
@@ -32,7 +32,7 @@
     line-height: 1.1;
 }
 
-#div_HB p {
+.div_HB p {
     margin: 0;
     font-family: 'Martel Sans Reg';
     font-size: clamp(5px, 0.8vw, 50px);

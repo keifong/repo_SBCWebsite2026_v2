@@ -1,6 +1,6 @@
 // adult fellowships page
 
-import FellowshipsPage from '@/components/fellowshipsPage'
+import FellowshipsPage from '@/components/fellowshipPage/fellowshipsPage'
 
 function FellowshipsAdult() {
     return <FellowshipsPage name="Adult Cell Groups" color="#942636" tag="adult" showCellGroups={true} 

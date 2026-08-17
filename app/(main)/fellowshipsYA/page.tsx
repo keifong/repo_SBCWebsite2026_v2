@@ -1,6 +1,6 @@
 // young adult fellowships page
 
-import FellowshipsPage from '@/components/fellowshipsPage'
+import FellowshipsPage from '@/components/fellowshipPage/fellowshipsPage'
 
 function FellowshipsYA() {
     return <FellowshipsPage name="Young Adult Fellowship" color="#37393A" tag="youngAdult" showCellGroups={true} 

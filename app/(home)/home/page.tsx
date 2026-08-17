@@ -8,8 +8,8 @@ import styles from "./home.module.css";
 
 // import Footer from "@/components/footer";
 // import NavbarWhite from "@/components/navbarWhite";
-import HomeButton from "@/components/homeButton";
-import Button from "@/components/button";
+import HomeButton from "@/components/homeButton/homeButton";
+import Button from "@/components/button/button";
 
 import brickWall from "@/public/brickWall.png";
 // import bl1 from "../../public/home/brickLines1.png";
@@ -215,7 +215,7 @@ function Home() {
 
                     </div>
 
-                    <div id="greenSeperator" />
+                    <div className="greenSeperator" />
 
                     {/* Service Timing */}
                     <div className={`div_row ${styles.div_mission}`}>

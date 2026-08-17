@@ -1,12 +1,8 @@
-/* .scrollable_container {
-    max-height: 80vh;
-    overflow-y: auto;
-} */
-
 .cu_wrap {
     width: 100%;
     margin-top: 3vw;
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
 }
 
 .div_seekFind {

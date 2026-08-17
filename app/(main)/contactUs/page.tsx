@@ -1,8 +1,7 @@
 "use client";
 
 import styles from "./contactUs.module.css";
-
-import Button from "@/components/button";
+import Button from "@/components/button/button";
 import Image from "next/image";
 import brickWall from "@/public/brickWall.png";
 import { useEffect, useState } from "react";
@@ -215,41 +214,27 @@ function ContactUs() {
                 </div>
             )}
 
-            <div id="greenSeperator" />
+            <div className="greenSeperator" />
 
             {/* ---------------------------------------------
                 Form + Map
             --------------------------------------------- */}
 
             <div className="div_row">
-
-                <div
-                    className={`div_column ${styles.div_form}`}
-                >
+                <div className={`div_column ${styles.div_form}`}>
+                    
                     {/* Contact form section */}
-
-                    <div
-                        className={`div_column ${styles.div_form_title}`}
-                    >
-                        <h2 className={styles.h2_reach}>
-                            Reach out to us
-                        </h2>
-
-                        <p className={styles.p_getBack}>
-                            We will get back to you as soon as possible
-                        </p>
+                    <div className={`div_column ${styles.div_form_title}`}>
+                        <h2 className={styles.h2_reach}>Reach out to us</h2>
+                        <p className={styles.p_getBack}>We will get back to you as soon as possible</p>
                     </div>
 
                     <div
                         className={`div_column ${styles.div_secondaryWrap}`}
                     >
-                        <form
-                            className={styles.form_contactUs}
-                            onSubmit={handleSubmit}
-                        >
-                            <div
-                                className={`div_row ${styles.div_fnamefemail}`}
-                            >
+                        <form className={styles.form_contactUs}
+                            onSubmit={handleSubmit}>
+                            <div className={`div_row ${styles.div_fnamefemail}`}>
                                 <input
                                     className={styles.form_input}
                                     type="text"

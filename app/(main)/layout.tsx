@@ -1,22 +1,14 @@
-import type { Metadata } from "next";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar/navbar";
 
-export const metadata: Metadata = {
-    title: "Singapore Baptist Church",
-    description: "Singapore Baptist Church",
-};
-
-export default function RootLayout({
+export default function MainLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body>
-                <Navbar/>
-                {children}
-            </body>
-        </html>
+        <>
+            <Navbar />
+            {children}
+        </>
     );
 }
