@@ -1,0 +1,71 @@
+.containerHC {
+  width: 40%;
+  padding: 1vw;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.headerHC {
+  justify-content: space-between;
+}
+
+.headerHC h4 {
+  font-family: 'Martel Sans Bold';
+  font-size: clamp(10px, 1.1vw, 50px);
+  color: #000;
+}
+
+.headerHC h5 {
+  font-family: 'Martel Sans SemiB';
+  font-size: clamp(10px, 0.9vw, 35px);
+  color: #323232;
+}
+
+.containerHC p {
+  font-family: 'Martel Sans Reg';
+  font-size: clamp(10px, 0.9vw, 35px);
+  color: #000;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.carousel img {
+  width: 80%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.carousel button {
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.indicator,
+.activeIndicator {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.activeIndicator {
+  transform: scale(1.3);
+}

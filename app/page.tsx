@@ -12,7 +12,6 @@ import Image from 'next/image'
 
 function Landing() {
   // fetching data
-  // const [imgURL, setImgURL] = useState('')
   const [imgURL, setImgURL] = useState<string | null>(null)
 
   useEffect(() => {

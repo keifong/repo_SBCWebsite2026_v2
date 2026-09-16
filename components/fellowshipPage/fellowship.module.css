@@ -25,9 +25,12 @@
 
 .img_faBo1 {
     position: absolute;
+    /* top: 200; */
     top: 0;
     right: 0;
-    width: clamp(15px, 20vw, 200px);
+    /* rotate: 360deg; */
+    width: clamp(15px, 25vw, 200px);
+    z-index: 999;
 }
 
 .img_faBo2 {
@@ -80,7 +83,7 @@
 }
 
 .wwd {
-    width: 40vw;
+    width: 100%;
     justify-content: center;
     padding: 1vw;
     background-color: #FFFFFF;

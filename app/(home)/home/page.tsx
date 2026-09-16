@@ -250,14 +250,16 @@ function Home() {
                             <p>Fellowship with us afterwards through Lunch</p>
                             <p className={styles.freep_freel}>Free Parking, Free Lunch</p>
                         </div>
-
-                        <Image
-                            src={prayer}
-                            className={styles.img_missionImg}
-                            alt="Prayer at Singapore Baptist Church"
-                            width={300}
-                            height={200}
-                        />
+                        
+                        {prayer &&
+                            <Image
+                                src={prayer}
+                                className={styles.img_missionImg}
+                                alt="Prayer at Singapore Baptist Church"
+                                width={300}
+                                height={200}
+                            />
+                        }
                     </div>
 
                     {/* Contact Us */}

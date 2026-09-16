@@ -15,3 +15,6 @@ export default FellowshipsAdult
 // info: "Cell Group", "subtext of what we do","content of what we do", "content of attention bar", "content of more information"
 
 // upcomingInfo: "Sunday School", "studying book of?", "title of lesson", "venue", "datetime"
+
+// TO CHANGE
+// put cell groups as a component with an interface and put it in

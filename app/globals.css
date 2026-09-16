@@ -63,6 +63,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -119,7 +120,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-} */
+} */ 
 
 .div_wrapper {
   min-height: 100vh;
@@ -129,6 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-top: 4vw;
 }
 
 .link_btn {

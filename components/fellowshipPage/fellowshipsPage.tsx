@@ -36,11 +36,8 @@ function FellowshipsPage({
     cellgroups,
     cgTexts,
 }: FellowshipProps) {
-    const [fellowshipData, setFellowshipData] =
-        useState<any>(null);
-
+    const [fellowshipData, setFellowshipData] = useState<any>(null);
     const [selectedCG, setSelectedCG] = useState(0);
-
     const [loading, setLoading] = useState(true);
 
     // Fetching data
@@ -71,11 +68,9 @@ function FellowshipsPage({
     }
 
     return (
-        // <div className="div_wrapper">
         <div className={styles.fellowship_wrapper}>
 
             {/* Fellowship title */}
-
             <div className={`div_column ${styles.div_faTitle}`}>
                 <h1 style={{ color: color }}>
                     {name.toUpperCase()}
@@ -83,7 +78,6 @@ function FellowshipsPage({
             </div>
 
             {/* Fellowship video */}
-
             <div className={styles.div_vid}>
                 {fellowshipData && (
                     <video
@@ -93,9 +87,7 @@ function FellowshipsPage({
                         className={styles.vid}
                     >
                         <source
-                            src={
-                                fellowshipData.videoArray[0]
-                            }
+                            src={fellowshipData.videoArray[0]}
                             type="video/mp4"
                         />
                     </video>
@@ -104,9 +96,7 @@ function FellowshipsPage({
 
             {/* What we do */}
 
-            <div
-                className={`div_row ${styles.faInfo}`}
-            >
+            <div className={`div_row ${styles.faInfo}`}>
                 <Image
                     src={placeholder3}
                     alt="Placeholder"
@@ -114,20 +104,17 @@ function FellowshipsPage({
                     width={300}
                     height={300}
                 />
-
-                <div
-                    className={`div_column ${styles.wwd}`}
-                >
-                    <h3 style={{ color: color }}>
-                        WHAT WE DO
-                    </h3>
-
-                    <h5 style={{ color: color }}>
-                        {info[1]}
-                    </h5>
-
+                {/* <Image
+                    src={brickWall}
+                    alt="Brick Wall"
+                    className={styles.img_faBo1}
+                    width={300}
+                    height={300}
+                /> */}
+                <div className={`div_column ${styles.wwd}`}>
+                    <h3 style={{ color: color }}>WHAT WE DO</h3>
+                    <h5 style={{ color: color }}>{info[1]}</h5>
                     <p>{info[2]}</p>
-
                     <Image
                         src={brickWall}
                         alt="Brick Wall"
@@ -135,6 +122,7 @@ function FellowshipsPage({
                         width={300}
                         height={300}
                     />
+                    
 
                     <Button title="Reach Out" />
                 </div>
@@ -144,9 +132,7 @@ function FellowshipsPage({
 
             <div
                 className={styles.div_attentionAction}
-                style={{
-                    backgroundColor: color,
-                }}
+                style={{backgroundColor: color}}
             >
                 <h3>{info[3]}</h3>
             </div>
@@ -154,16 +140,10 @@ function FellowshipsPage({
             {/* Cell groups */}
 
             {showCellGroups && (
-                <div
-                    className={`div_column ${styles.cgBtnContainer}`}
-                >
-                    <h3 style={{ color: color }}>
-                        Cell Groups
-                    </h3>
+                <div className={`div_column ${styles.cgBtnContainer}`}>
+                    <h3 style={{ color: color }}> Cell Groups</h3>
 
-                    <div
-                        className={`div_row ${styles.div_faCGs}`}
-                    >
+                    <div className={`div_row ${styles.div_faCGs}`}>
                         {cellgroups.map(
                             (cg: string, index: number) => (
                                 <div
@@ -188,16 +168,9 @@ function FellowshipsPage({
             )}
 
             {/* Selected cell group information */}
-
-            <div
-                className={`div_row ${styles.faInfo}`}
-            >
-                <div
-                    className={`div_column ${styles.wwd}`}
-                >
-                    <p>
-                        {cgTexts[selectedCG]}
-                    </p>
+            <div className={`div_row ${styles.faInfo}`}>
+                <div className={`div_column ${styles.wwd}`}>
+                    <p>{cgTexts[selectedCG]}</p>
 
                     <Image
                         src={brickWall}
@@ -218,10 +191,7 @@ function FellowshipsPage({
             </div>
 
             {/* Upcoming */}
-
-            <div
-                className={`div_column ${styles.div_upcoming}`}
-            >
+            <div className={`div_column ${styles.div_upcoming}`}>
                 <h3>Upcoming</h3>
 
                 <div className="div_row">
@@ -236,11 +206,8 @@ function FellowshipsPage({
                                 <div>
                                     <h4>{event.name}</h4>
                                 </div>
-
                                 <p>{event.book}</p>
-
                                 <p>{event.venue}</p>
-
                                 <p>{event.dateTime}</p>
                             </div>
                         )

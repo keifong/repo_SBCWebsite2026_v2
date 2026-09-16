@@ -1,47 +1,47 @@
 /* aboutus */
 
-.page {
+/* .page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+} */
+
+.containerAU {
+  box-sizing: border-box;
 }
 
-.page main {
-    flex: 1;
+.headerTxtAU {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(190, 190, 190, 0.5)), url('/events/gifting.png');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  height: auto;
+  color: #FFF;
+} 
+
+.headerTxtAU h1 {
+  font-family: 'Martel Sans Bold';
+  font-size: clamp(30px, 3vw, 100px);
+  margin-bottom: 0;
+  padding: 0;
+  line-height: 1.3;
 }
 
-.hero {
-    min-height: 40vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 4rem 2rem;
+.headerTxtAU p {
+  font-family: 'Martel Sans Reg';
+  font-size: clamp(10px, 1.2vw, 40px);
+  margin: 0;
+  padding: 0;
 }
 
-.hero h1 {
-    margin: 0;
-    font-size: clamp(2rem, 5vw, 5rem);
+.searchAU {
+  gap: 2vw;
+  margin: 2vw;
+  justify-content: center;
 }
 
-.hero p {
-    max-width: 700px;
-    font-size: clamp(1rem, 1.5vw, 1.5rem);
-}
-
-.section {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-}
-
-.section h2 {
-    font-size: clamp(1.5rem, 3vw, 3rem);
-    margin-bottom: 1.5rem;
-}
-
-.section p {
-    font-size: clamp(1rem, 1.3vw, 1.25rem);
-    line-height: 1.8;
+.searchAU input {
+  width: 50%;
+  padding: 1vw;
+  font-family: 'Martel Sans SemiB';
 }

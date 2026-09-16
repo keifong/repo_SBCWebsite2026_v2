@@ -1,43 +1,57 @@
 "use client";
 
 import styles from "./page.module.css";
+import Button from "@/components/button/button";
+import HistoryCard from "@/components/aboutUs/historyCard";
+
+const tempHistoryData = [
+  {
+    title: "Singapore Baptist Church Established",
+    date: "June 1937",
+    images: [
+      "/events/gifting.png",
+      "/events/happy.png",
+      "/events/jaydon.png"
+    ],
+    description:
+      "Singapore Baptist Church was established with..."
+  },
+  {
+    title: "New Church Building",
+    date: "Dec 1965",
+    images: [
+      "/events/gifting.png",
+      "/events/robes.jpg"
+    ],
+    description:
+      "The church moved into a new building..."
+  }
+]
 
 function AboutUs() {
     return (
-        <div className={styles.page}>
-            {/* <Navbar /> */}
+        <div className={`div_wrapper ${styles.containerAU}`}>
+            <div className={`div_column ${styles.headerTxtAU}`}>
+              <h1>About us</h1>
+              <p>short subtitle about our church</p>
+              <div className={`div_row ${styles.searchAU}`}>
+                <input placeholder="Type in keywords eg: Retreat, 2004"/>
+                <Button title="Search"/>
+              </div>
+            </div>
+            <div className={`div_column ${styles.historyCardsAU}`}>
+              {/* insert in historyCard(s) */}
+              {/* write logic of appearance based on chronological order (top down, left right) */}
+              {tempHistoryData.map((histCard, index)=> (
+                <HistoryCard 
+                  images={histCard.images}
+                  date={histCard.date}
+                  title={histCard.title}
+                  description={histCard.description}
+                />
+              ))}
+            </div>
 
-            <main>
-                <section className={styles.hero}>
-                    <h1>About Us</h1>
-                    <p>
-                        Learn more about Singapore Baptist Church,
-                        our history, beliefs, and mission.
-                    </p>
-                </section>
-
-                <section className={styles.section}>
-                    <h2>Singapore Baptist Church</h2>
-
-                    <p>
-                        Welcome to Singapore Baptist Church.
-                    </p>
-
-                    <p>
-                        We are a church seeking to know Christ, grow together
-                        as His people, and share the Gospel with others.
-                    </p>
-                </section>
-
-                <section className={styles.section}>
-                    <h2>Our Mission</h2>
-
-                    <p>
-                        To glorify God by making disciples of Jesus Christ
-                        and serving our community.
-                    </p>
-                </section>
-            </main>
 
         </div>
     );
