@@ -72,6 +72,10 @@ body {
     min-height: 100vh;
 }
 
+.mainContent {
+    flex: 1;
+}
+
 .button_sbc {
     width: 10vw;
     height: auto;
@@ -123,7 +127,7 @@ body {
 } */ 
 
 .div_wrapper {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   max-width: 100%;
   overflow-x: clip;
   overflow-y: visible;

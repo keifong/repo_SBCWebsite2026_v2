@@ -15,7 +15,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                {children}
+                <main className="mainContent">
+                    {children}
+                </main>
                 <Footer/>
             </body>
         </html>
