@@ -36,6 +36,66 @@ const tempHistoryData = [
     date: "Jan 2004",
     images: ["/events/happy.png", "/events/gifting.png"],
     description: "The church entered a new chapter of ministry, with members continuing to serve and build the church community."
+  },
+  {
+    title: "Growing Fellowship",
+    date: "May 2010",
+    images: ["/events/jaydon.png", "/events/happy.png"],
+    description: "The church continued strengthening fellowship among members through worship, community activities and ministry."
+  },
+  {
+    title: "Expansion of Church Ministries",
+    date: "Sep 2012",
+    images: ["/events/gifting.png", "/events/robes.jpg"],
+    description: "New ministry opportunities developed as the church sought to serve different generations within the congregation."
+  },
+  {
+    title: "Community Outreach",
+    date: "Feb 2014",
+    images: ["/events/happy.png", "/events/jaydon.png"],
+    description: "The church increased its involvement in community outreach and activities that connected members with the wider community."
+  },
+  {
+    title: "New Fellowship Initiatives",
+    date: "Jul 2016",
+    images: ["/events/robes.jpg", "/events/gifting.png"],
+    description: "Additional fellowship initiatives were introduced to encourage stronger relationships and participation among church members."
+  },
+  {
+    title: "Strengthening the Next Generation",
+    date: "Nov 2018",
+    images: ["/events/jaydon.png", "/events/happy.png"],
+    description: "The church placed greater emphasis on encouraging younger members and developing opportunities for the next generation."
+  },
+  {
+    title: "Adapting Through Change",
+    date: "Apr 2020",
+    images: ["/events/gifting.png", "/events/robes.jpg"],
+    description: "The church adapted its activities and methods of gathering during a period of significant change and uncertainty."
+  },
+  {
+    title: "Rebuilding Church Fellowship",
+    date: "Oct 2021",
+    images: ["/events/happy.png", "/events/jaydon.png"],
+    description: "Church fellowship gradually resumed as members began gathering together again and rebuilding community life."
+  },
+  {
+    title: "Renewed Ministry Activities",
+    date: "Jun 2023",
+    images: ["/events/robes.jpg", "/events/gifting.png"],
+    description: "The church renewed its ministry activities and continued serving members through worship, fellowship and outreach."
+  },
+  {
+    title: "Growing Church Community",
+    date: "Mar 2025",
+    images: ["/events/jaydon.png", "/events/happy.png"],
+    description: "The church continued to grow as members participated in worship, fellowship and various ministries."
+  },
+  {
+    title: "Looking Toward the Future",
+    date: "Sep 2026",
+    images: ["/events/gifting.png", "/events/robes.jpg", "/events/happy.png"],
+    description: "Singapore Baptist Church continues looking toward the future while building upon its history, faith and community."
   }
 ];
 
@@ -278,13 +338,35 @@ function AboutUs() {
         }}
       >
 
+        {/* path rendering */}
+        {nodePositions.length === sortedHistoryData.length &&
+          nodePositions.slice(0, -1).map((node, index) => {
+            const nextNode = nodePositions[index + 1];
+
+            const dx = nextNode.x - node.x;
+            const dy = nextNode.y - node.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+            return (
+              <div
+                key={`path-${index}`}
+                className={styles.historyPath}
+                style={{
+                  left: `${node.x}px`,
+                  top: `${node.y}px`,
+                  width: `${distance}px`,
+                  transform: `rotate(${angle}deg)`
+                }}
+              />
+            );
+          })}
         {/* --------------------------------------------------
             RENDER NODES
             --------------------------------------------------
             Only render them once every history item
             has successfully received a position.
         -------------------------------------------------- */}
-
         {nodePositions.length === sortedHistoryData.length &&
           sortedHistoryData.map((history, index) => (
 

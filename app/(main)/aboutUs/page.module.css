@@ -69,3 +69,12 @@
   top: 150px;
   left: 150px;
 }
+
+.historyPath {
+  position: absolute;
+  height: 0;
+  border-top: 3px dotted #5A1717;
+  transform-origin: left center;
+  pointer-events: none;
+  z-index: 0;
+}
