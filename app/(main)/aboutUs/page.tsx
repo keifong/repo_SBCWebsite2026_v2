@@ -106,15 +106,34 @@ const START_Y = 100;
 // Distance the final node should be from the bottom/right edge
 const END_OFFSET = 100;
 
-// Rules for generating the winding journey
-const MIN_DISTANCE = 100;
-const MAX_DISTANCE = 300;
-
 // Minimum distance between any two nodes
-const MIN_DIST_FROM_EACH_OTHER = 200;
+const MIN_DIST_FROM_EACH_OTHER = 100;
 
 // Size of each node
 const NODE_SIZE = 20;
+
+// preset moves
+// const rightMoves = [
+//   { x: 200, y: 200 },
+//   { x: 300, y: 100 },
+//   { x: 300, y: 250 }
+// ];
+
+// const leftMoves = [
+//   { x: -200, y: 200 },
+//   { x: -300, y: 100 },
+//   { x: -300, y: 250 }
+// ];
+
+const PRESET_MOVES = [
+  { x: 200, y: 120 },
+  { x: 220, y: 0 },
+  { x: 180, y: -120 },
+  { x: 150, y: 160 },
+  { x: -120, y: 160 },
+  { x: -180, y: 80 },
+  { x: 150, y: -100 }
+];
 
 function AboutUs() {
 
@@ -198,39 +217,31 @@ function AboutUs() {
       }
     ];
 
-    // Generate every node except the first and final node
+    // Generate every node except the final/oldest node
     for (let i = 1; i < sortedHistoryData.length - 1; i++) {
       const previousNode = positions[i - 1];
       let newPosition;
 
-      // Try up to 500 random positions
-      for (let attempt = 0; attempt < 500; attempt++) {
-        // Pick a random direction
-        const angle = Math.random() * Math.PI * 2;
+      // Shuffle the preset movements
+      const shuffledMoves = [...PRESET_MOVES].sort(
+        () => Math.random() - 0.5
+      );
 
-        // Pick a random distance between 100px and 200px
-        const distance =
-          MIN_DISTANCE +
-          Math.random() * (MAX_DISTANCE - MIN_DISTANCE);
+      // Try every preset movement
+      for (const move of shuffledMoves) {
+        const x = previousNode.x + move.x;
+        const y = previousNode.y + move.y;
 
-        const x = previousNode.x + Math.cos(angle) * distance;
-        const y = previousNode.y + Math.sin(angle) * distance;
-
-        // Only check the horizontal boundary here.
-        // We do NOT check the bottom because the container
-        // height has not been calculated yet.
+        // Make sure the node stays inside the container
         const insideContainer =
           x >= START_X &&
-          x <= containerSize.width - NODE_SIZE / 2 &&
+          x <= containerSize.width - NODE_SIZE &&
           y >= START_Y;
 
         if (!insideContainer) continue;
 
-        // Make sure this node is at least 150px away
-        // from every node already generated
-        const farEnoughFromExistingNodes = positions
-        .slice(0, -1)
-        .every(node => {
+        // Make sure this node is far enough from every existing node
+        const farEnoughFromExistingNodes = positions.every(node => {
           const dx = x - node.x;
           const dy = y - node.y;
           const distanceFromNode = Math.sqrt(dx * dx + dy * dy);
@@ -249,9 +260,9 @@ function AboutUs() {
         break;
       }
 
-      // Stop if a valid position could not be found
+      // Stop if no valid preset position could be found
       if (!newPosition) {
-        console.log("Could not find valid position for node", i);
+        console.log("Could not find valid preset position for node", i);
         return;
       }
 
@@ -267,7 +278,7 @@ function AboutUs() {
     // Generate the final/oldest node
     // ---------------------------------------------------------
 
-    // Start the final node 150px below the lowest node
+    // Start the final node below the lowest generated node
     let finalY = lowestNodeY + MIN_DIST_FROM_EACH_OTHER;
 
     // Final node is always 100px from the right side
@@ -294,10 +305,6 @@ function AboutUs() {
       x: finalX,
       y: finalY
     });
-
-    // ---------------------------------------------------------
-    // Calculate the actual container height
-    // ---------------------------------------------------------
 
     // Give the final node exactly 100px of space below it
     const newHeight = finalY + END_OFFSET;
