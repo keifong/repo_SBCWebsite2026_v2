@@ -7,7 +7,35 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
   z-index: 10;
+  transform-origin: center;
+  animation: historyCardUnfold 500ms
+    cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
 }
+
+@keyframes historyCardUnfold {
+  0% {
+    opacity: 0;
+    transform: scale(0.08);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .containerHC {
+    animation: none;
+  }
+}
+
 
 .headerHC {
   padding: 1vw 0vw 0.5vw 2vw;

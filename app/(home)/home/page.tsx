@@ -104,9 +104,12 @@ function Home() {
                 {/* Background image */}
                 <div className={styles.img_bg}>
                     {yay && (
-                        <img
+                        <Image
                             src={yay}
                             alt="Singapore Baptist Church"
+                            width={1920}
+                            height={1080}
+                            sizes="100vw"
                         />
                     )}
                 </div>
@@ -256,8 +259,9 @@ function Home() {
                                 src={prayer}
                                 className={styles.img_missionImg}
                                 alt="Prayer at Singapore Baptist Church"
-                                width={300}
-                                height={200}
+                                width={1920}
+                                height={1080}
+                                sizes="100vw"
                             />
                         }
                     </div>
@@ -268,8 +272,9 @@ function Home() {
                             src={liftConstruction}
                             className={styles.img_missionImg}
                             alt="Singapore Baptist Church"
-                            width={300}
-                            height={200}
+                            width={1920}
+                            height={1080}
+                            sizes="100vw"
                         />
 
                         <div className={styles.div_cuText}>
