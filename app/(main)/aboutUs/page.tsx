@@ -63,6 +63,7 @@ function AboutUs() {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
+  // decade grouping
   const eraGroups = sortedHistoryData.reduce<
     {
       decade: number;
@@ -181,7 +182,7 @@ useEffect(() => {
       {/* Page header */}
       <div className={`div_column ${styles.headerTxtAU}`}>
         <h1>About us</h1>
-        <p>short subtitle about our church</p>
+        <p>I long to tell the story, of Jesus and His Love</p>
 
         {/* History search */}
         <div className={`div_row ${styles.searchAU}`}>
@@ -193,12 +194,6 @@ useEffect(() => {
       {/* Loading and error messages */}
       {loading && <p>Loading church history...</p>}
       {fetchError && <p>{fetchError}</p>}
-      {/* --------------------------------------------------
-          HISTORY JOURNEY CONTAINER
-          --------------------------------------------------
-          The height comes from historyHeight instead
-          of using a fixed CSS height.
-      -------------------------------------------------- */}
 
       <div
         ref={historyContainerRef}
