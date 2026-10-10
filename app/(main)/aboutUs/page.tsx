@@ -4,136 +4,12 @@ import styles from "./page.module.css";
 import Button from "@/components/button/button";
 import HistoryCard from "@/components/aboutUs/historyCard";
 import { useRef, useEffect, useState } from "react";
+import { tempHistoryData } from "./historyData";
+import {
+  generateNodePositions,
+  type NodePosition
+} from "./historyLayout";
 
-// Temporary history data
-const tempHistoryData = [
-  {
-    title: "Singapore Baptist Church Established",
-    date: "June 1937",
-    images: ["/events/gifting.png", "/events/happy.png", "/events/jaydon.png"],
-    description: "Singapore Baptist Church was established with a small group of believers gathering together in Singapore."
-  },
-  {
-    title: "First Church Building",
-    date: "Mar 1948",
-    images: ["/events/gifting.png", "/events/robes.jpg"],
-    description: "The church moved into its first dedicated place of worship as the congregation continued to grow."
-  },
-  {
-    title: "New Church Building",
-    date: "Dec 1965",
-    images: ["/events/gifting.png", "/events/happy.png"],
-    description: "The church moved into a new building, providing more space for worship, fellowship and ministry."
-  },
-  {
-    title: "Church Community Expanded",
-    date: "Aug 1982",
-    images: ["/events/jaydon.png", "/events/robes.jpg"],
-    description: "The church community continued to grow, with new ministries and fellowship activities becoming part of church life."
-  },
-  {
-    title: "New Generation of Ministry",
-    date: "Jan 2004",
-    images: ["/events/happy.png", "/events/gifting.png"],
-    description: "The church entered a new chapter of ministry, with members continuing to serve and build the church community."
-  },
-  {
-    title: "Growing Fellowship",
-    date: "May 2010",
-    images: ["/events/jaydon.png", "/events/happy.png"],
-    description: "The church continued strengthening fellowship among members through worship, community activities and ministry."
-  },
-  {
-    title: "Expansion of Church Ministries",
-    date: "Sep 2012",
-    images: ["/events/gifting.png", "/events/robes.jpg"],
-    description: "New ministry opportunities developed as the church sought to serve different generations within the congregation."
-  },
-  {
-    title: "Community Outreach",
-    date: "Feb 2014",
-    images: ["/events/happy.png", "/events/jaydon.png"],
-    description: "The church increased its involvement in community outreach and activities that connected members with the wider community."
-  },
-  {
-    title: "New Fellowship Initiatives",
-    date: "Jul 2016",
-    images: ["/events/robes.jpg", "/events/gifting.png"],
-    description: "Additional fellowship initiatives were introduced to encourage stronger relationships and participation among church members."
-  },
-  {
-    title: "Strengthening the Next Generation",
-    date: "Nov 2018",
-    images: ["/events/jaydon.png", "/events/happy.png"],
-    description: "The church placed greater emphasis on encouraging younger members and developing opportunities for the next generation."
-  },
-  {
-    title: "Adapting Through Change",
-    date: "Apr 2020",
-    images: ["/events/gifting.png", "/events/robes.jpg"],
-    description: "The church adapted its activities and methods of gathering during a period of significant change and uncertainty."
-  },
-  {
-    title: "Rebuilding Church Fellowship",
-    date: "Oct 2021",
-    images: ["/events/happy.png", "/events/jaydon.png"],
-    description: "Church fellowship gradually resumed as members began gathering together again and rebuilding community life."
-  },
-  {
-    title: "Renewed Ministry Activities",
-    date: "Jun 2023",
-    images: ["/events/robes.jpg", "/events/gifting.png"],
-    description: "The church renewed its ministry activities and continued serving members through worship, fellowship and outreach."
-  },
-  {
-    title: "Growing Church Community",
-    date: "Mar 2025",
-    images: ["/events/jaydon.png", "/events/happy.png"],
-    description: "The church continued to grow as members participated in worship, fellowship and various ministries."
-  },
-  {
-    title: "Looking Toward the Future",
-    date: "Sep 2026",
-    images: ["/events/gifting.png", "/events/robes.jpg", "/events/happy.png"],
-    description: "Singapore Baptist Church continues looking toward the future while building upon its history, faith and community."
-  }
-];
-
-// Starting position of the first/latest node
-const START_X = 100;
-const START_Y = 100;
-
-// Distance the final node should be from the bottom/right edge
-const END_OFFSET = 100;
-
-// Minimum distance between any two nodes
-const MIN_DIST_FROM_EACH_OTHER = 100;
-
-// Size of each node
-const NODE_SIZE = 20;
-
-// preset moves
-// const rightMoves = [
-//   { x: 200, y: 200 },
-//   { x: 300, y: 100 },
-//   { x: 300, y: 250 }
-// ];
-
-// const leftMoves = [
-//   { x: -200, y: 200 },
-//   { x: -300, y: 100 },
-//   { x: -300, y: 250 }
-// ];
-
-const PRESET_MOVES = [
-  { x: 200, y: 120 },
-  { x: 220, y: 0 },
-  { x: 180, y: -120 },
-  { x: 150, y: 160 },
-  { x: -120, y: 160 },
-  { x: -180, y: 80 },
-  { x: 150, y: -100 }
-];
 
 function AboutUs() {
 
@@ -143,6 +19,42 @@ function AboutUs() {
   const sortedHistoryData = [...tempHistoryData].sort((a, b) => {
     return new Date(`${b.date} 1`).getTime() - new Date(`${a.date} 1`).getTime();
   });
+
+  // Group consecutive history entries by decade.
+  // The data is already sorted newest to oldest.
+  const eraGroups = sortedHistoryData.reduce<
+    {
+      decade: number;
+      startIndex: number;
+      endIndex: number;
+    }[]
+  >((groups, history, index) => {
+    const year = new Date(`${history.date} 1`).getFullYear();
+    const decade = Math.floor(year / 10) * 10;
+
+    const currentGroup = groups[groups.length - 1];
+
+    if (!currentGroup || currentGroup.decade !== decade) {
+      groups.push({
+        decade,
+        startIndex: index,
+        endIndex: index
+      });
+    } else {
+      currentGroup.endIndex = index;
+    }
+
+    return groups;
+  }, []);
+
+  // Temporary images for each era.
+  // Replace these paths with real historical church photographs later.
+  const eraImages = [
+    "/events/gifting.png",
+    "/events/happy.png",
+    "/events/jaydon.png"
+  ];
+
 
   // Stores which history card is currently open
   // null means no card is open
@@ -206,112 +118,20 @@ function AboutUs() {
   // or the number of history events changes.
   // --------------------------------------------------
 
-  useEffect(() => {
-    if (!containerSize.width) return;
 
-    // Start with the first/latest node at exactly 100,100
-    const positions = [
-      {
-        x: START_X,
-        y: START_Y
-      }
-    ];
+useEffect(() => {
+  if (!containerSize.width) return;
 
-    // Generate every node except the final/oldest node
-    for (let i = 1; i < sortedHistoryData.length - 1; i++) {
-      const previousNode = positions[i - 1];
-      let newPosition;
+  const result = generateNodePositions(
+    sortedHistoryData,
+    containerSize.width
+  );
 
-      // Shuffle the preset movements
-      const shuffledMoves = [...PRESET_MOVES].sort(
-        () => Math.random() - 0.5
-      );
+  setNodePositions(result.positions);
+  setHistoryHeight(result.height);
+}, [containerSize.width, sortedHistoryData.length]);
 
-      // Try every preset movement
-      for (const move of shuffledMoves) {
-        const x = previousNode.x + move.x;
-        const y = previousNode.y + move.y;
 
-        // Make sure the node stays inside the container
-        const insideContainer =
-          x >= START_X &&
-          x <= containerSize.width - NODE_SIZE &&
-          y >= START_Y;
-
-        if (!insideContainer) continue;
-
-        // Make sure this node is far enough from every existing node
-        const farEnoughFromExistingNodes = positions.every(node => {
-          const dx = x - node.x;
-          const dy = y - node.y;
-          const distanceFromNode = Math.sqrt(dx * dx + dy * dy);
-
-          return distanceFromNode > MIN_DIST_FROM_EACH_OTHER;
-        });
-
-        if (!farEnoughFromExistingNodes) continue;
-
-        // Valid position found
-        newPosition = {
-          x,
-          y
-        };
-
-        break;
-      }
-
-      // Stop if no valid preset position could be found
-      if (!newPosition) {
-        console.log("Could not find valid preset position for node", i);
-        return;
-      }
-
-      positions.push(newPosition);
-    }
-
-    // Find the lowest point reached by the generated nodes
-    const lowestNodeY = Math.max(
-      ...positions.map(position => position.y)
-    );
-
-    // ---------------------------------------------------------
-    // Generate the final/oldest node
-    // ---------------------------------------------------------
-
-    // Start the final node below the lowest generated node
-    let finalY = lowestNodeY + MIN_DIST_FROM_EACH_OTHER;
-
-    // Final node is always 100px from the right side
-    const finalX = containerSize.width - END_OFFSET;
-
-    // Make sure the final node is far enough from every node
-    for (let attempt = 0; attempt < 500; attempt++) {
-      const farEnoughFromExistingNodes = positions.every(node => {
-        const dx = finalX - node.x;
-        const dy = finalY - node.y;
-        const distanceFromNode = Math.sqrt(dx * dx + dy * dy);
-
-        return distanceFromNode > MIN_DIST_FROM_EACH_OTHER;
-      });
-
-      if (farEnoughFromExistingNodes) break;
-
-      // Move the final node further down if necessary
-      finalY += 20;
-    }
-
-    // Add the final/oldest node
-    positions.push({
-      x: finalX,
-      y: finalY
-    });
-
-    // Give the final node exactly 100px of space below it
-    const newHeight = finalY + END_OFFSET;
-
-    setNodePositions(positions);
-    setHistoryHeight(newHeight);
-  }, [containerSize.width, sortedHistoryData.length]);
 
 
   return (
@@ -344,6 +164,59 @@ function AboutUs() {
           height: historyHeight ? `${historyHeight}px` : "0px"
         }}
       >
+        
+  {/* --------------------------------------------------
+      ERA BACKGROUND IMAGES
+      --------------------------------------------------
+      Each image covers the vertical section occupied
+      by that decade's history nodes.
+  -------------------------------------------------- */}
+
+      {nodePositions.length === sortedHistoryData.length &&
+        eraGroups.map((era, eraIndex) => {
+          const top =
+            era.startIndex === 0
+              ? 0
+              : (
+                  nodePositions[era.startIndex - 1].y +
+                  nodePositions[era.startIndex].y
+                ) / 2;
+
+          const bottom =
+            era.endIndex === sortedHistoryData.length - 1
+              ? historyHeight
+              : (
+                  nodePositions[era.endIndex].y +
+                  nodePositions[era.endIndex + 1].y
+                ) / 2;
+
+          const image = eraImages[eraIndex % eraImages.length];
+
+          return (
+            <div
+              key={`era-${era.decade}`}
+              className={styles.eraBackground}
+              style={{
+                top: `${top}px`,
+                height: `${bottom - top}px`,
+                backgroundImage: `
+                  linear-gradient(
+                    rgba(255, 255, 255, 0.45),
+                    rgba(255, 255, 255, 0.45)
+                  ),
+                  url("${image}")
+                `
+              }}
+            >
+              <span className={styles.eraLabel}>
+                {era.decade}s
+              </span>
+            </div>
+          );
+        })}
+
+
+
 
         {/* path rendering */}
         {nodePositions.length === sortedHistoryData.length &&
