@@ -209,7 +209,7 @@ useEffect(() => {
               }}
             >
               <span className={styles.eraLabel}>
-                {era.decade}s
+                {era.decade}
               </span>
             </div>
           );
@@ -249,23 +249,30 @@ useEffect(() => {
         -------------------------------------------------- */}
         {nodePositions.length === sortedHistoryData.length &&
           sortedHistoryData.map((history, index) => (
-
-            <div
+            
+            <button
               key={index}
               className={styles.historyNode}
               style={{
-                left: `${nodePositions[index].x}px`,
-                top: `${nodePositions[index].y}px`
+                left: nodePositions[index].x,
+                top: nodePositions[index].y,
               }}
-
-              // Clicking a node opens its HistoryCard
               onClick={() =>
-                setSelectedHistory({
-                  history,
-                  index
-                })
+                setSelectedHistory({ history, index })
               }
-            />
+              aria-label={`View event: ${history.title}`}
+              title={history.title}
+            >
+              <img
+                src={history.images[0]}
+                alt=""
+                className={styles.historyNodeImage}
+              />
+              <span className={styles.historyNodeLabel}>
+                {history.title}
+              </span>
+            </button>
+
 
           ))}
 
@@ -276,30 +283,21 @@ useEffect(() => {
             Only appears when selectedHistory isn't null.
         -------------------------------------------------- */}
 
-        {selectedHistory && (
-
-          <HistoryCard
-            images={selectedHistory.history.images}
-            date={selectedHistory.history.date}
-            title={selectedHistory.history.title}
-            description={selectedHistory.history.description}
-
-            // Position of the clicked node
-            x={nodePositions[selectedHistory.index].x}
-            y={nodePositions[selectedHistory.index].y}
-
-            // Size of the history container
-            containerWidth={containerSize.width}
-            containerHeight={historyHeight}
-
-            // Close the card
-            onClose={() => setSelectedHistory(null)}
-          />
-
-        )}
-
+      {selectedHistory && (
+        <HistoryCard
+          images={selectedHistory.history.images}
+          date={selectedHistory.history.date}
+          title={selectedHistory.history.title}
+          description={selectedHistory.history.description}
+          x={nodePositions[selectedHistory.index].x}
+          y={nodePositions[selectedHistory.index].y}
+          containerWidth={containerSize.width}
+          containerHeight={historyHeight}
+          nodePositions={nodePositions}
+          onClose={() => setSelectedHistory(null)}
+        />
+      )}
       </div>
-
     </div>
   );
 }

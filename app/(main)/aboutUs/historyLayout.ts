@@ -60,9 +60,9 @@ export function generateNodePositions(
   );
 
   const verticalGap =
-    safeWidth >= 1200 ? 240 :
-    safeWidth >= 800 ? 220 :
-    safeWidth >= 600 ? 200 : 180;
+    safeWidth >= 1200 ? 400 :
+    safeWidth >= 800 ? 360 :
+    safeWidth >= 600 ? 320 : 280;
 
 
   const endY =
@@ -74,12 +74,14 @@ export function generateNodePositions(
 
   // Irregular horizontal targets create a less mechanical path.
   // These are proportions of the usable width.
+  
   const horizontalTargets = [
-    0.84, 0.27, 0.72, 0.43,
-    0.13, 0.79, 0.54, 0.19,
-    0.66, 0.88, 0.35, 0.61,
-    0.16, 0.48, 0.81, 0.30
+    0.95, 0.18, 0.82, 0.35,
+    0.06, 0.91, 0.61, 0.12,
+    0.75, 0.98, 0.25, 0.68,
+    0.08, 0.45, 0.89, 0.30
   ];
+
 
   const anchors: NodePosition[] = [
     { x: startX, y: startY }
