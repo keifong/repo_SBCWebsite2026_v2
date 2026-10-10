@@ -1,40 +1,26 @@
-// aboutus route.ts
-// events route.ts
-
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
 export async function GET() {
-    // console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
-    // console.log(
-    //     "SUPABASE_KEY exists:",
-    //     !!process.env.SUPABASE_KEY
-    // );
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
-    try {
-        const supabase = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-        );
+  const { data, error } = await supabase
+    .from("auTable")
+    .select("*")
+    .order("date", { ascending: false })
+    .order("id", { ascending: false });
 
-        const { data, error } = await supabase
-            .from("auTable")
-            .select("*");
+  if (error) {
+    console.error("Error fetching About Us history:", error.message);
 
-        if (error) {
-            return NextResponse.json(
-                { error: error.message },
-                { status: 500 }
-            );
-        }
+    return NextResponse.json(
+      { error: "Failed to fetch history records" },
+      { status: 500 }
+    );
+  }
 
-        return NextResponse.json(data);
-    } catch (error) {
-        console.error("getAboutUs error:", error);
-
-        return NextResponse.json(
-            { error: "Failed to fetch AboutUS data" },
-            { status: 500 }
-        );
-    }
+  return NextResponse.json(data);
 }

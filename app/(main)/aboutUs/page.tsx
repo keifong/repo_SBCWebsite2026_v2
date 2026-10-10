@@ -4,24 +4,100 @@ import styles from "./page.module.css";
 import Button from "@/components/button/button";
 import HistoryCard from "@/components/aboutUs/historyCard";
 import { useRef, useEffect, useState } from "react";
-import { tempHistoryData } from "./historyData";
+// temp generated data 
+// import { tempHistoryData } from "./historyData";
 import {
   generateNodePositions,
   type NodePosition
 } from "./historyLayout";
 
+// supabase interface
+interface HistoryItem {
+  id: number;
+  title: string;
+  date: string;
+  images: string[];
+  description: string;
+}
+
+
 
 function AboutUs() {
+  // useStates for supabase data
+  const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  // fetch history data from supabase
+  useEffect(() => {
+    async function fetchHistory() {
+      try {
+        const response = await fetch("/api/aboutus");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch history records.");
+        }
+
+        const data: HistoryItem[] = await response.json();
+        setHistoryData(data);
+      } catch (error) {
+        console.error("Error fetching history:", error);
+        setFetchError("Unable to load church history.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchHistory();
+  }, []);
+
+  // helper to format date string to "MMM YYYY" format
+  function formatHistoryDate(date: string): string {
+    return new Date(`${date}T00:00:00`).toLocaleDateString("en-SG", {
+      month: "short",
+      year: "numeric",
+    });
+  }
 
   // Sort the history from newest → oldest
   // This means the first node is the newest event
   // and the final node is the oldest event
-  const sortedHistoryData = [...tempHistoryData].sort((a, b) => {
-    return new Date(`${b.date} 1`).getTime() - new Date(`${a.date} 1`).getTime();
+  // const sortedHistoryData = [...tempHistoryData].sort((a, b) => {
+  //   return new Date(`${b.date} 1`).getTime() - new Date(`${a.date} 1`).getTime();
+  // });
+
+  // // Group consecutive history entries by decade.
+  // // The data is already sorted newest to oldest.
+  // const eraGroups = sortedHistoryData.reduce<
+  //   {
+  //     decade: number;
+  //     startIndex: number;
+  //     endIndex: number;
+  //   }[]
+  // >((groups, history, index) => {
+  //   const year = new Date(`${history.date} 1`).getFullYear();
+  //   const decade = Math.floor(year / 10) * 10;
+
+  //   const currentGroup = groups[groups.length - 1];
+
+  //   if (!currentGroup || currentGroup.decade !== decade) {
+  //     groups.push({
+  //       decade,
+  //       startIndex: index,
+  //       endIndex: index
+  //     });
+  //   } else {
+  //     currentGroup.endIndex = index;
+  //   }
+
+  //   return groups;
+  // }, []);
+
+  // supabase sort n group
+  const sortedHistoryData = [...historyData].sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
-  // Group consecutive history entries by decade.
-  // The data is already sorted newest to oldest.
   const eraGroups = sortedHistoryData.reduce<
     {
       decade: number;
@@ -29,7 +105,7 @@ function AboutUs() {
       endIndex: number;
     }[]
   >((groups, history, index) => {
-    const year = new Date(`${history.date} 1`).getFullYear();
+    const year = new Date(history.date).getFullYear();
     const decade = Math.floor(year / 10) * 10;
 
     const currentGroup = groups[groups.length - 1];
@@ -38,7 +114,7 @@ function AboutUs() {
       groups.push({
         decade,
         startIndex: index,
-        endIndex: index
+        endIndex: index,
       });
     } else {
       currentGroup.endIndex = index;
@@ -46,6 +122,7 @@ function AboutUs() {
 
     return groups;
   }, []);
+
 
   // Temporary images for each era.
   // Replace these paths with real historical church photographs later.
@@ -58,8 +135,12 @@ function AboutUs() {
 
   // Stores which history card is currently open
   // null means no card is open
+  // const [selectedHistory, setSelectedHistory] = useState<{
+  //   history: typeof tempHistoryData[0];
+  //   index: number;
+  // } | null>(null);
   const [selectedHistory, setSelectedHistory] = useState<{
-    history: typeof tempHistoryData[0];
+    history: HistoryItem;
     index: number;
   } | null>(null);
 
@@ -149,7 +230,9 @@ useEffect(() => {
         </div>
       </div>
 
-
+      {/* Loading and error messages */}
+      {loading && <p>Loading church history...</p>}
+      {fetchError && <p>{fetchError}</p>}
       {/* --------------------------------------------------
           HISTORY JOURNEY CONTAINER
           --------------------------------------------------
@@ -286,7 +369,7 @@ useEffect(() => {
       {selectedHistory && (
         <HistoryCard
           images={selectedHistory.history.images}
-          date={selectedHistory.history.date}
+          date={formatHistoryDate(selectedHistory.history.date)}
           title={selectedHistory.history.title}
           description={selectedHistory.history.description}
           x={nodePositions[selectedHistory.index].x}

@@ -3,11 +3,15 @@ import { createClient } from '@supabase/supabase-js'
 
 export const handler: Handler = async () => {
     const supabase = createClient(
-        process.env.SUPABASE_URL!,
-        process.env.SUPABASE_KEY!
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
 
-    const { data, error } = await supabase.from('about_us').select('*')
+     const { data, error } = await supabase
+    .from("auTable")
+    .select("*")
+    .order("date", { ascending: false })
+    .order("id", { ascending: false });
 
     if (error) {
         return {
@@ -18,6 +22,9 @@ export const handler: Handler = async () => {
 
     return {
         statusCode: 200,
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(data)
     }
 }
