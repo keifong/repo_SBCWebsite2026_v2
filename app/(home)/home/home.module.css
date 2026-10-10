@@ -10,18 +10,19 @@
 
 .img_bg {
     width: 100%;
-    position: static;
-    top: 0;
-    left: 0;
+    position: relative;
     background-color: #A41216;
     overflow: hidden;
-    object-fit: cover;
     height: 30vh;
 }
 
 .img_bg img {
     width: 100%;
-    margin-top: -150px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    margin-top: 0;
 }
 
 @media (max-width: 700px) {

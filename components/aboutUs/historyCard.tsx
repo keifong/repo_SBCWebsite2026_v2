@@ -2,6 +2,7 @@
 
 import styles from "./historyCard.module.css";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 interface NodePosition {
   x: number;
@@ -114,9 +115,11 @@ export default function HistoryCard(props: HCProps) {
       <div className={styles.carousel}>
         <button onClick={previousImage}>‹</button>
 
-        <img
+        <Image
           src={props.images[currentImage]}
           alt={props.title}
+          width={400}
+          height={300}
         />
 
         <button onClick={nextImage}>›</button>

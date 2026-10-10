@@ -4,12 +4,11 @@ import styles from "./page.module.css";
 import Button from "@/components/button/button";
 import HistoryCard from "@/components/aboutUs/historyCard";
 import { useRef, useEffect, useState } from "react";
-// temp generated data 
-// import { tempHistoryData } from "./historyData";
 import {
   generateNodePositions,
   type NodePosition
 } from "./historyLayout";
+import Image from "next/image";
 
 // supabase interface
 interface HistoryItem {
@@ -59,40 +58,6 @@ function AboutUs() {
     });
   }
 
-  // Sort the history from newest → oldest
-  // This means the first node is the newest event
-  // and the final node is the oldest event
-  // const sortedHistoryData = [...tempHistoryData].sort((a, b) => {
-  //   return new Date(`${b.date} 1`).getTime() - new Date(`${a.date} 1`).getTime();
-  // });
-
-  // // Group consecutive history entries by decade.
-  // // The data is already sorted newest to oldest.
-  // const eraGroups = sortedHistoryData.reduce<
-  //   {
-  //     decade: number;
-  //     startIndex: number;
-  //     endIndex: number;
-  //   }[]
-  // >((groups, history, index) => {
-  //   const year = new Date(`${history.date} 1`).getFullYear();
-  //   const decade = Math.floor(year / 10) * 10;
-
-  //   const currentGroup = groups[groups.length - 1];
-
-  //   if (!currentGroup || currentGroup.decade !== decade) {
-  //     groups.push({
-  //       decade,
-  //       startIndex: index,
-  //       endIndex: index
-  //     });
-  //   } else {
-  //     currentGroup.endIndex = index;
-  //   }
-
-  //   return groups;
-  // }, []);
-
   // supabase sort n group
   const sortedHistoryData = [...historyData].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -134,11 +99,6 @@ function AboutUs() {
 
 
   // Stores which history card is currently open
-  // null means no card is open
-  // const [selectedHistory, setSelectedHistory] = useState<{
-  //   history: typeof tempHistoryData[0];
-  //   index: number;
-  // } | null>(null);
   const [selectedHistory, setSelectedHistory] = useState<{
     history: HistoryItem;
     index: number;
@@ -346,10 +306,12 @@ useEffect(() => {
               aria-label={`View event: ${history.title}`}
               title={history.title}
             >
-              <img
+              <Image
                 src={history.images[0]}
                 alt=""
                 className={styles.historyNodeImage}
+                width={100}
+                height={100}
               />
               <span className={styles.historyNodeLabel}>
                 {history.title}
