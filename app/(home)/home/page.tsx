@@ -1,6 +1,5 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import { supabase, getImageUrl } from "@/lib/supabase"
+export const revalidate = 3600;
 import Link from "next/link";
 
 // import "./style_home.css";
@@ -10,6 +9,14 @@ import styles from "./home.module.css";
 // import NavbarWhite from "@/components/navbarWhite";
 import HomeButton from "@/components/homeButton/homeButton";
 import Button from "@/components/button/button";
+import HomeImg from "@/public/yay.jpg"
+import LeadershipBtn from "@/public/home/sermonBtn.png"
+import FellowshipsBtn from "@/public/home/fellowshipsBtn.png"
+import ChoirBtn from "@/public/home/sermonBtn.png"
+import EventsBtn from "@/public/home/aboutUsBtn.png"
+import AUBtn from "@/public/home/aboutUsBtn.png"
+import PrayerImg from "@/public/prayer.jpg"
+import LiftConstructionImg from "@/public/sbc_liftConstruc.jpg"
 
 import brickWall from "@/public/brickWall.png";
 // import bl1 from "../../public/home/brickLines1.png";
@@ -19,99 +26,31 @@ import bl3 from "@/public/home/brickLines3.png";
 import brickLines from "@/public/brickOutlines.png";
 import Image from "next/image";
 
-function Home() {
-    const [currImage, setCurrImage] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [homeImages, setHomeImages] = useState<any[]>([]);
+async function Home() {
 
-    // Load data from Supabase through the Next.js API route
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/home')
+    const { data } = await supabase.from("home").select("*"); // use the same table/query as /api/home
+    const homeImages = data ?? [];
 
-                if (!response.ok) {
-                    throw new Error(
-                        `Failed to fetch home data: ${response.status}`
-                    );
-                }
+    const liftConstruction = homeImages.find((i) => i.imageName === "liftConstruction")?.image;
+    const prayer = homeImages.find((i) => i.imageName === "prayer")?.image;
 
-                const data = await response.json();
-
-                console.log("data:", data);
-
-                setHomeImages(data);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    // -------- assign images --------
-
-    const leadershipBtn = homeImages.find(
-        (img) => img.imageName === "choirBtn"
-    )?.image;
-
-    const choirBtn = homeImages.find(
-        (img) => img.imageName === "choirBtn"
-    )?.image;
-
-    const fellowshipBtn = homeImages.find(
-        (img) => img.imageName === "fellowshipBtn"
-    )?.image;
-
-    const eventsBtn = homeImages.find(
-        (img) => img.imageName === "abtUsBtn"
-    )?.image;
-
-    const abtUsBtn = homeImages.find(
-        (img) => img.imageName === "abtUsBtn"
-    )?.image;
-
-    const yay = homeImages.find(
-        (img) => img.imageName === "yay"
-    )?.image;
-
-    const liftConstruction = homeImages.find(
-        (img) => img.imageName === "liftConstruction"
-    )?.image;
-
-    const prayer = homeImages.find(
-        (img) => img.imageName === "prayer"
-    )?.image;
-
-    // ----------------------------
-
-    if (loading) {
-        return (
-            <div className="loading_screen">
-                <h2>Loading...</h2>
-            </div>
-        );
-    }
 
     return (
         <>
             <div className={styles.div_wrapper_home}>
-
-                {/* <NavbarWhite /> */}
-
                 {/* Background image */}
                 <div className={styles.img_bg}>
-                    {yay && (
+                    {/* {yay && ( */}
                         <Image
-                            src={yay}
+                            // src={yay}
+                            src={HomeImg}
                             alt="Singapore Baptist Church"
                             width={1920}
                             height={1080}
                             sizes="100vw"
+                            priority
                         />
-                    )}
+                    {/* )} */}
                 </div>
 
                 <div className="div_column">
@@ -158,60 +97,51 @@ function Home() {
                                 href="/leadership"
                                 className="link_btn"
                             >
-                                {leadershipBtn && (
-                                    <HomeButton
-                                        image={leadershipBtn}
-                                        title="Pastoral Leadership"
-                                        subText="Learn More"
-                                    />
-                                )}
+                                <HomeButton
+                                    image={LeadershipBtn}
+                                    title="Pastoral Leadership"
+                                    subText="Learn More"
+                                />
                             </Link>
 
                             <Link
                                 href="/fellowshipsAdult"
                                 className="link_btn"
                             >
-                                {fellowshipBtn && (
-                                    <HomeButton
-                                        image={fellowshipBtn}
-                                        title="Fellowships"
-                                        subText="Learn More"
-                                    />
-                                )}
+                                <HomeButton
+                                    image={FellowshipsBtn}
+                                    title="Fellowships"
+                                    subText="Learn More"
+                                />
                             </Link>
 
-                            {choirBtn && (
                                 <HomeButton
-                                    image={choirBtn}
+                                    image={ChoirBtn}
                                     title="Choir"
                                     subText="Learn More"
                                 />
-                            )}
 
                             <Link
                                 href="/events"
                                 className="link_btn"
                             >
-                                {eventsBtn && (
-                                    <HomeButton
-                                        image={eventsBtn}
+                                <HomeButton
+                                        image={EventsBtn}
                                         title="Events"
                                         subText="Learn More"
                                     />
-                                )}
                             </Link>
 
                             <Link
                                 href="/aboutUs"
                                 className="link_btn"
                             >
-                                {abtUsBtn && (
-                                    <HomeButton
-                                        image={abtUsBtn}
-                                        title="About Us"
-                                        subText="Learn More"
-                                    />
-                                )}
+                                <HomeButton
+                                    image={AUBtn}
+                                    title="About Us"
+                                    subText="Learn More"
+                                />
+
                             </Link>
 
                         </div>
@@ -254,22 +184,20 @@ function Home() {
                             <p className={styles.freep_freel}>Free Parking, Free Lunch</p>
                         </div>
                         
-                        {prayer &&
                             <Image
-                                src={prayer}
+                                src={PrayerImg}
                                 className={styles.img_missionImg}
                                 alt="Prayer at Singapore Baptist Church"
                                 width={1920}
                                 height={1080}
                                 sizes="100vw"
                             />
-                        }
                     </div>
 
                     {/* Contact Us */}
                     <div className={`div_row ${styles.div_mission}`}>
                         <Image
-                            src={liftConstruction}
+                            src={LiftConstructionImg}
                             className={styles.img_missionImg}
                             alt="Singapore Baptist Church"
                             width={1920}

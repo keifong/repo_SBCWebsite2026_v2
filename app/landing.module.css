@@ -112,12 +112,12 @@
   }
 
   .welcome {
-    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    font-size: clamp(1.5rem, 5vw, 250px);
   }
 
   .description {
-    width: 70%;
-    font-size: clamp(0.8rem, 3vw, 1rem);
+    width: 50%;
+    font-size: clamp(0.8rem, 2.5vw, 100px);
     line-height: 1.3;
   }
 

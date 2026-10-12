@@ -33,9 +33,10 @@ function Landing() {
             <div className={styles.div_imgWrap}>
               <Image
                 className={styles.imgChurchCross}
-                src={imgURL}
+                src={imgCross}
                 alt="Church Cross"
                 fill
+                priority
               />
             </div>
           )}

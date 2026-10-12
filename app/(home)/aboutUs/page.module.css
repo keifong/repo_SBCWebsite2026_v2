@@ -1,0 +1,419 @@
+/* aboutus */
+
+.containerAU {
+  box-sizing: border-box;
+  flex:1;
+  width: 100%;
+}
+
+.headerTxtAU {
+  background-image: url('/group2023.JPG');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  height: auto;
+  /* background-color: #5A1717; */
+  position: relative;
+  padding-top:4vw;
+  z-index: 10;
+} 
+
+.titleCard {
+  position: relative;
+  z-index: 2;                      /* above the gradient overlay and the brick lines */
+  align-self: center;              /* .headerTxtAU is a flex column, this stops it stretching full width */
+  padding: 1vw;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);      /* optional: softly blurs the bricks behind the card */
+}
+
+/* white text would vanish on a white card, so switch to your maroon */
+.headerTxtAU h1,
+.headerTxtAU p {
+  color: #A41216;
+}
+
+/* .headerTxtAU::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    #5a171700   0%,
+    #a41217  40%,
+    #a41217  60%,   
+    #5a171700 100%
+  );
+} */
+
+.headerTxtAU h1 {
+  font-family: 'Martel Sans Bold';
+  font-size: clamp(30px, 4vw, 200px);
+  margin-bottom: 0;
+  line-height: 1.3;
+  position: relative;
+  z-index: 2;
+}
+
+.headerTxtAU p {
+  font-family: 'Martel Sans Reg';
+  font-size: clamp(10px, 1.6vw, 80px);
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.bw {
+  position: absolute;
+  top: 0;
+  height: 100%;            /* full height of the header */
+  width: 30vw;             /* how much of each side the wall takes up */
+  object-fit: cover;       /* fills the strip without stretching the image */
+  pointer-events: none;    /* never blocks clicks on the search box */
+}
+
+.bwLeft {
+  left: 0;
+  transform: scaleX(-1);   /* mirrors it so the two sides match; remove if you don't want it */
+}
+
+.bwRight {
+  right: 0;
+}
+
+.bl {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 3vw;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 5; 
+}
+
+.blRight {
+  left: 40%; 
+}
+
+.blLeft {
+  right: 40%;
+  transform: scaleX(-1);
+}
+
+/* search bar */
+.searchAU {
+  position: relative;      /* needed for z-index to apply reliably */
+  z-index: 50;             /* above the timeline nodes (z-index 2) */
+  gap: 2vw;
+  margin: 2vw;
+  justify-content: center;
+}
+
+.searchBox {
+  position: relative;      /* anchors the dropdown */
+  width: 50%;
+}
+
+.searchAU input {
+  width: 100%;             /* was 50%, the wrapper controls the width now */
+  box-sizing: border-box;
+  padding: 1vw;
+  font-family: 'Martel Sans SemiB';
+  border: 1px solid #5A1717;
+  padding-right: 2.5rem;
+}
+
+.searchDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  color: #5A1717;
+  text-align: left;
+  border: 1px solid #5A1717;
+  border-top: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.searchItem {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1vw;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Martel Sans Reg';
+  font-size: clamp(10px, 1vw, 16px);
+  color: inherit;
+}
+
+.searchItem:hover,
+.searchItem:focus-visible {
+  background: #f3e6e6;
+}
+
+.searchItemDate {
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.searchEmpty {
+  padding: 0.7rem 1vw;
+  font-family: 'Martel Sans Reg';
+  font-size: clamp(10px, 1vw, 16px);
+  opacity: 0.6;
+}
+
+.searchClear {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.6rem;
+  height: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: rgba(90, 23, 23, 0.6);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.searchClear:hover,
+.searchClear:focus-visible {
+  background: #f3e6e6;
+  color: #5A1717;
+}
+
+/* historyCards section*/
+.historyCardsAU {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.historyNode {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #000;
+  position: absolute;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+}
+
+.node0 {
+  top: 50px;
+  left: 50px;
+}
+
+.node1 {
+  top: 150px;
+  left: 150px;
+}
+
+.historyPath {
+  position: absolute;
+  height: 0;
+  border-top: 3px dotted #5A1717;
+  transform-origin: left center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* Background image for each historical era */
+.eraBackground {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-bottom: 4px solid rgba(94, 105, 49, 0.55);
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Label identifying the decade */
+.eraLabel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.8);
+  color: #5A1717;
+
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Martel Sans Black';
+}
+
+/* Keep the existing timeline path above the images */
+.historyPath {
+  z-index: 1;
+}
+
+/* new node implementation */
+.historyNode {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  z-index: 2;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.historyNode:hover,
+.historyNode:focus-visible {
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+  border: 3px solid #5A1717;
+}
+
+.historyNodeImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.historyNodeLabel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 160px;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #5A1717;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.historyNode:hover .historyNodeLabel,
+.historyNode:focus-visible .historyNodeLabel {
+  opacity: 1;
+}
+
+/* scroll bar */
+/* decade sidebar */
+.eraNavWrap {
+  position: fixed;
+  right: 1.5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  background-color: #ffffff7d;
+  padding: 0.8vw;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.decadeNav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+  padding-right: 0.8rem;
+  border-right: 2px solid rgba(90, 23, 23, 0.25);   /* thin guide line */
+}
+
+.decadeBtn {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Martel Sans Reg';
+  font-size: 0.8rem;
+  color: rgba(90, 23, 23, 0.55);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.decadeBtn:hover {
+  color: #5A1717;
+}
+
+/* dot sitting on the guide line */
+.decadeBtn::after {
+  content: "";
+  position: absolute;
+  right: calc(-0.8rem - 5px);
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(90, 23, 23, 0.35);
+  transform: translateY(-50%);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.decadeBtnActive {
+  color: #5A1717;
+  font-family: 'Martel Sans Bold';
+}
+
+.decadeBtnActive::after {
+  background: #5A1717;
+  transform: translateY(-50%) scale(1.4);
+}
+
+/* so the navbar never covers the top of a decade after scrolling to it */
+.eraBackground {
+  scroll-margin-top: clamp(48px, 4vw, 90px);
+}
+
+@media (max-width: 768px) {
+  .decadeNav {
+    right: 2vw;
+    gap: 0.4rem;
+  }
+  .decadeBtn {
+    font-size: 0.7rem;
+  }
+}
