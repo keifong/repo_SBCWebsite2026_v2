@@ -28,8 +28,17 @@ function Landing() {
   
   return (
     <>
-        <div className={`div_flexRow ${styles.div_content}`}>
-          {imgURL && <Image className={styles.imgChurchCross} src={imgURL} alt="Church Cross" width={300} height={600} />}
+        <div className={styles.div_content}>
+          {imgURL && (
+            <div className={styles.div_imgWrap}>
+              <Image
+                className={styles.imgChurchCross}
+                src={imgURL}
+                alt="Church Cross"
+                fill
+              />
+            </div>
+          )}
 
             <div className={`div_flexColumn ${styles.div_welcome}`}>
               <Image src={NavBarBlack} className={styles.img_landingLogo} alt="Singapore Baptist Church" width={300} height={50}/>

@@ -30,12 +30,17 @@
 
 /* Logo */
 
-.navbar img {
-    width: clamp(30px, 20vw, 200px);
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-top: 0.3vw;
+.link_logo {
+    display: flex;
+    align-items: center;
+    height: 100%;            /* same height as the navbar */
+}
+
+.img_logo {
+    height: 80%;             /* a little breathing room inside the navbar */
+    width: auto;             /* width follows the aspect ratio */
+    max-width: none;
+    /* no more position: absolute */
 }
 
 

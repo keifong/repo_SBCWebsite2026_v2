@@ -52,12 +52,14 @@ function Navbar() {
         backgroundColor: `rgba(0, 0, 0, ${navOpacity})`,
       }}
     >
-      <Link href="/home">
+      <Link href="/home" className={styles.link_logo}>
         <Image
           src="/churchLogo/sbc_logoBlack.png"
           alt="Singapore Baptist Church"
           width={200}
           height={60}
+          className={styles.img_logo}
+          priority
         />
       </Link>
 

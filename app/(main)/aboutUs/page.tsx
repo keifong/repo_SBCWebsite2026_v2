@@ -19,6 +19,18 @@ interface HistoryItem {
   description: string;
 }
 
+// Key = first year of the decade (2020 means 2020–2029)
+const eraImages: Record<number, string> = {
+  2020: "/halfBrick.JPG",
+  2010: "/halfBrick.JPG",
+  2000: "/halfBrick.JPG",
+  1990: "/halfBrick.JPG",
+  1980: "/halfBrick.JPG",
+  1970: "/halfBrick.JPG",
+  1960: "/halfBrick.JPG",
+};
+
+const fallbackEraImage = "/eras/default.jpg";
 
 
 function AboutUs() {
@@ -65,38 +77,21 @@ function AboutUs() {
 
   // decade grouping
   const eraGroups = sortedHistoryData.reduce<
-    {
-      decade: number;
-      startIndex: number;
-      endIndex: number;
-    }[]
+    { startYear: number; startIndex: number; endIndex: number }[]
   >((groups, history, index) => {
-    const year = new Date(history.date).getFullYear();
-    const decade = Math.floor(year / 10) * 10;
+    const year = Number(history.date.slice(0, 4));
+    const startYear = Math.floor(year / 10) * 10;
 
     const currentGroup = groups[groups.length - 1];
 
-    if (!currentGroup || currentGroup.decade !== decade) {
-      groups.push({
-        decade,
-        startIndex: index,
-        endIndex: index,
-      });
+    if (!currentGroup || currentGroup.startYear !== startYear) {
+      groups.push({ startYear, startIndex: index, endIndex: index });
     } else {
       currentGroup.endIndex = index;
     }
 
     return groups;
   }, []);
-
-
-  // Temporary images for each era.
-  // Replace these paths with real historical church photographs later.
-  const eraImages = [
-    "/events/gifting.png",
-    "/events/happy.png",
-    "/events/jaydon.png"
-  ];
 
 
   // Stores which history card is currently open
@@ -183,6 +178,40 @@ useEffect(() => {
       <div className={`div_column ${styles.headerTxtAU}`}>
         <h1>About us</h1>
         <p>I long to tell the story, of Jesus and His Love</p>
+        {/* brick lines */}
+        <Image
+          src="/brickOutlines.png"
+          alt=''
+          aria-hidden="true"
+          className={`${styles.bl} ${styles.blLeft}`}
+          width={400}
+          height={100}
+        />
+        <Image
+          src="/brickOutlines.png"
+          alt=''
+          aria-hidden="true"
+          className={`${styles.bl} ${styles.blRight}`}
+          width={400}
+          height={100}
+        />
+        {/* brick walls */}
+        <Image
+          src="/brickWall.png"
+          alt=""
+          aria-hidden="true"
+          className={`${styles.bw} ${styles.bwLeft}`}
+          width={100}
+          height={100}
+        />
+        <Image
+          src="/brickWall.png"
+          alt=""
+          aria-hidden="true"
+          className={`${styles.bw} ${styles.bwRight}`}
+          width={100}
+          height={100}
+        />
 
         {/* History search */}
         <div className={`div_row ${styles.searchAU}`}>
@@ -211,7 +240,7 @@ useEffect(() => {
   -------------------------------------------------- */}
 
       {nodePositions.length === sortedHistoryData.length &&
-        eraGroups.map((era, eraIndex) => {
+        eraGroups.map((era) => {
           const top =
             era.startIndex === 0
               ? 0
@@ -228,11 +257,11 @@ useEffect(() => {
                   nodePositions[era.endIndex + 1].y
                 ) / 2;
 
-          const image = eraImages[eraIndex % eraImages.length];
+          const image = eraImages[era.startYear] ?? fallbackEraImage;
 
           return (
             <div
-              key={`era-${era.decade}`}
+              key={`era-${era.startYear}`}
               className={styles.eraBackground}
               style={{
                 top: `${top}px`,
@@ -247,7 +276,7 @@ useEffect(() => {
               }}
             >
               <span className={styles.eraLabel}>
-                {era.decade}
+                {era.startYear}
               </span>
             </div>
           );

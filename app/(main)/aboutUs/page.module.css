@@ -7,13 +7,32 @@
 }
 
 .headerTxtAU {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(190, 190, 190, 0.5)), url('/events/gifting.png');
+  background-image: url('/group2023.JPG');
   background-size: cover;
   background-position: center;
   text-align: center;
   height: auto;
-  color: #FFF;
+  color: #fff;
+  /* background-color: #5A1717; */
+  position: relative;
+  overflow: hidden; 
+  padding-top:4vw;
 } 
+
+/* .headerTxtAU::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    #5a171700   0%,
+    #a41217  40%,
+    #a41217  60%,   
+    #5a171700 100%
+  );
+} */
 
 .headerTxtAU h1 {
   font-family: 'Martel Sans Bold';
@@ -21,6 +40,8 @@
   margin-bottom: 0;
   padding: 0;
   line-height: 1.3;
+  position: relative;
+  z-index: 2;
 }
 
 .headerTxtAU p {
@@ -28,18 +49,59 @@
   font-size: clamp(10px, 1.2vw, 40px);
   margin: 0;
   padding: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.bw {
+  position: absolute;
+  top: 0;
+  height: 100%;            /* full height of the header */
+  width: 30vw;             /* how much of each side the wall takes up */
+  object-fit: cover;       /* fills the strip without stretching the image */
+  pointer-events: none;    /* never blocks clicks on the search box */
+}
+
+.bwLeft {
+  left: 0;
+  transform: scaleX(-1);   /* mirrors it so the two sides match; remove if you don't want it */
+}
+
+.bwRight {
+  right: 0;
+}
+
+.bl {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 3vw;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1; 
+}
+
+.blRight {
+  left: 40%; 
+}
+
+.blLeft {
+  right: 40%;
+  transform: scaleX(-1);
 }
 
 .searchAU {
   gap: 2vw;
   margin: 2vw;
   justify-content: center;
+  z-index: 2;
 }
 
 .searchAU input {
   width: 50%;
   padding: 1vw;
   font-family: 'Martel Sans SemiB';
+  border: 1px solid #5A1717;
 }
 
 /* historyCards section*/
@@ -118,11 +180,6 @@
 .historyPath {
   z-index: 1;
 }
-
-/* Keep the existing nodes above the images and path */
-/* .historyNode {
-  z-index: 2;
-} */
 
 /* new node implementation */
 .historyNode {
