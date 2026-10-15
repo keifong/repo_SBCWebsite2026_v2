@@ -19,6 +19,21 @@ interface HistoryItem {
   description: string;
 }
 
+// Key = first year of the decade (2020 means 2020–2029)
+const eraImages: Record<number, string> = {
+  2020: "/halfBrick.JPG",
+  2010: "/halfBrick.JPG",
+  2000: "/halfBrick.JPG",
+  1990: "/halfBrick.JPG",
+  1980: "/halfBrick.JPG",
+  1970: "/halfBrick.JPG",
+  1960: "/halfBrick.JPG",
+  1950: "/halfBrick.JPG",
+  1940: "/halfBrick.JPG",
+  1930: "/halfBrick.JPG",
+};
+
+const fallbackEraImage = "/eras/default.jpg";
 
 
 function AboutUs() {
@@ -26,7 +41,14 @@ function AboutUs() {
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
+  const [activeDecade, setActiveDecade] = useState<number | null>(null);
+  // search bar logic
+  const [query, setQuery] = useState("");
+  const [showResults, setShowResults] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
+  const eraRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const inputRef = useRef<HTMLInputElement>(null);
   // fetch history data from supabase
   useEffect(() => {
     async function fetchHistory() {
@@ -65,38 +87,21 @@ function AboutUs() {
 
   // decade grouping
   const eraGroups = sortedHistoryData.reduce<
-    {
-      decade: number;
-      startIndex: number;
-      endIndex: number;
-    }[]
+    { startYear: number; startIndex: number; endIndex: number }[]
   >((groups, history, index) => {
-    const year = new Date(history.date).getFullYear();
-    const decade = Math.floor(year / 10) * 10;
+    const year = Number(history.date.slice(0, 4));
+    const startYear = Math.floor(year / 10) * 10;
 
     const currentGroup = groups[groups.length - 1];
 
-    if (!currentGroup || currentGroup.decade !== decade) {
-      groups.push({
-        decade,
-        startIndex: index,
-        endIndex: index,
-      });
+    if (!currentGroup || currentGroup.startYear !== startYear) {
+      groups.push({ startYear, startIndex: index, endIndex: index });
     } else {
       currentGroup.endIndex = index;
     }
 
     return groups;
   }, []);
-
-
-  // Temporary images for each era.
-  // Replace these paths with real historical church photographs later.
-  const eraImages = [
-    "/events/gifting.png",
-    "/events/happy.png",
-    "/events/jaydon.png"
-  ];
 
 
   // Stores which history card is currently open
@@ -174,19 +179,199 @@ useEffect(() => {
 }, [containerSize.width, sortedHistoryData.length]);
 
 
+  // scroll to decade
+  const scrollToDecade = (startYear: number) => {
+    eraRefs.current[startYear]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // highlight whichever decade is crossing the middle of the screen
+  useEffect(() => {
+    const entries = eraGroups
+      .map((e) => ({ year: e.startYear, el: eraRefs.current[e.startYear] }))
+      .filter((x): x is { year: number; el: HTMLDivElement } => x.el != null);
+
+    if (entries.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (obs) => {
+        obs.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const match = entries.find((x) => x.el === entry.target);
+            if (match) setActiveDecade(match.year);
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+
+    entries.forEach((x) => observer.observe(x.el));
+    return () => observer.disconnect();
+  }, [eraGroups.map((e) => e.startYear).join(","), nodePositions.length]);
 
 
+  //search logic
+  // "retr camp" -> ["retr", "camp"]; every term must appear somewhere in the title
+  const searchTerms = query.toLowerCase().split(/[\s,]+/).filter(Boolean);
+
+  const searchResults =
+    searchTerms.length === 0
+      ? []
+      : sortedHistoryData
+          .map((history, index) => ({ history, index })) // keep the sorted index, the nodes use it
+          .filter(({ history }) => {
+            const title = history.title.toLowerCase();
+            return searchTerms.every((term) => title.includes(term));
+          })
+          .slice(0, 8); // cap the dropdown length
+
+  const selectResult = (history: HistoryItem, index: number) => {
+    setShowResults(false);
+    setQuery(history.title);
+
+    const container = historyContainerRef.current;
+    if (container && nodePositions[index]) {
+      const top =
+        container.getBoundingClientRect().top +
+        window.scrollY +
+        nodePositions[index].y -
+        window.innerHeight / 2;               // centres the node on screen
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+
+    setSelectedHistory({ history, index });
+  };
+
+  // close the dropdown when clicking elsewhere
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setShowResults(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // UI
   return (
     <div className={`div_wrapper ${styles.containerAU}`}>
+      {/* side scroll bar */}
+      <div className={styles.eraNavWrap}>
+        {eraGroups.length > 0 && (
+          <nav className={styles.decadeNav} aria-label="Jump to decade">
+            {eraGroups.map((era) => (
+              <button
+                key={era.startYear}
+                className={`${styles.decadeBtn} ${
+                  activeDecade === era.startYear ? styles.decadeBtnActive : ""
+                }`}
+                onClick={() => scrollToDecade(era.startYear)}
+              >
+                {era.startYear}
+              </button>
+            ))}
+          </nav>
+        )}
+      </div>
 
       {/* Page header */}
       <div className={`div_column ${styles.headerTxtAU}`}>
-        <h1>About us</h1>
-        <p>I long to tell the story, of Jesus and His Love</p>
+        <div className={styles.titleCard}>
+          <h1>About us</h1>
+          <p>To tell the old old story, of Jesus and His Love</p>
+        </div>
+        {/* brick lines */}
+        {/* <Image
+          src="/brickOutlines.png"
+          alt=''
+          aria-hidden="true"
+          className={`${styles.bl} ${styles.blLeft}`}
+          width={400}
+          height={100}
+        />
+        <Image
+          src="/brickOutlines.png"
+          alt=''
+          aria-hidden="true"
+          className={`${styles.bl} ${styles.blRight}`}
+          width={400}
+          height={100}
+        /> */}
+        {/* brick walls */}
+        {/* <Image
+          src="/brickWall.png"
+          alt=""
+          aria-hidden="true"
+          className={`${styles.bw} ${styles.bwLeft}`}
+          width={100}
+          height={100}
+        />
+        <Image
+          src="/brickWall.png"
+          alt=""
+          aria-hidden="true"
+          className={`${styles.bw} ${styles.bwRight}`}
+          width={100}
+          height={100}
+        /> */}
 
         {/* History search */}
         <div className={`div_row ${styles.searchAU}`}>
-          <input placeholder="Type in keywords eg: Retreat, 2004" />
+          <div className={styles.searchBox} ref={searchRef}>
+            <input
+              placeholder="Type in keywords eg: Retreat"
+              value={query}
+              autoComplete="off"
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setShowResults(true);
+              }}
+              onFocus={() => setShowResults(true)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setShowResults(false);
+                if (e.key === "Enter" && searchResults.length > 0) {
+                  selectResult(searchResults[0].history, searchResults[0].index);
+                }
+              }}
+            />
+
+            {query && (
+              <button
+                type="button"
+                className={styles.searchClear}
+                aria-label="Clear search"
+                onClick={() => {
+                  setQuery("");
+                  setShowResults(false);
+                  inputRef.current?.focus();
+                }}
+              >
+                ×
+              </button>
+            )}
+
+            {showResults && searchTerms.length > 0 && (
+              <ul className={styles.searchDropdown}>
+                {searchResults.length > 0 ? (
+                  searchResults.map(({ history, index }) => (
+                    <li key={history.id}>
+                      <button
+                        className={styles.searchItem}
+                        onClick={() => selectResult(history, index)}
+                      >
+                        <span>{history.title}</span>
+                        <span className={styles.searchItemDate}>
+                          {formatHistoryDate(history.date)}
+                        </span>
+                      </button>
+                    </li>
+                  ))
+                ) : (
+                  <li className={styles.searchEmpty}>No matching events</li>
+                )}
+              </ul>
+            )}
+          </div>
           <Button title="Search" />
         </div>
       </div>
@@ -211,7 +396,7 @@ useEffect(() => {
   -------------------------------------------------- */}
 
       {nodePositions.length === sortedHistoryData.length &&
-        eraGroups.map((era, eraIndex) => {
+        eraGroups.map((era) => {
           const top =
             era.startIndex === 0
               ? 0
@@ -228,26 +413,28 @@ useEffect(() => {
                   nodePositions[era.endIndex + 1].y
                 ) / 2;
 
-          const image = eraImages[eraIndex % eraImages.length];
+          const image = eraImages[era.startYear] ?? fallbackEraImage;
 
           return (
             <div
-              key={`era-${era.decade}`}
+              key={`era-${era.startYear}`}
+              ref={(el) => { eraRefs.current[era.startYear] = el; }}
               className={styles.eraBackground}
               style={{
                 top: `${top}px`,
                 height: `${bottom - top}px`,
-                backgroundImage: `
-                  linear-gradient(
-                    rgba(255, 255, 255, 0.45),
-                    rgba(255, 255, 255, 0.45)
-                  ),
-                  url("${image}")
-                `
+                // backgroundImage: `
+                //   linear-gradient(
+                //     rgba(255, 255, 255, 0.45),
+                //     rgba(255, 255, 255, 0.45)
+                //   ),
+                //   url("${image}")
+                // `
+                backgroundImage: `url(${image})`
               }}
             >
               <span className={styles.eraLabel}>
-                {era.decade}
+                {era.startYear}
               </span>
             </div>
           );
