@@ -8,6 +8,7 @@ import Button from "@/components/button/button";
 import placeholder from "@/public/events/jaydon.png";   // local fallback photo
 import brickWall from "@/public/brickWall.png";
 import brickOutline from "@/public/brickOutlines.png";
+import GalleryFade from "./galleryFade";
 
 type FellowshipProps = {
   name: string;
@@ -84,9 +85,9 @@ function FellowshipsPage({ name, color, tag, showCellGroups, info, cellgroups, c
           <h1 style={{ color }}>{name.toUpperCase()}</h1>
         </div>
 
-        <div className={`div_row ${styles.faInfo}`}>
+        <div className={`div_row ${styles.faInfo} ${styles.faInfoSide}`}>
           <div className={styles.photoFrame}>
-            <Image src={photo1} alt="" fill sizes="40vw" className={styles.photo} />
+            <Image src={photo1} alt="" fill sizes="45vw" className={styles.photo} />
           </div>
 
           <div className={`div_column ${styles.wwd}`}>
@@ -94,7 +95,10 @@ function FellowshipsPage({ name, color, tag, showCellGroups, info, cellgroups, c
             <h3 style={{ color }}>WHAT WE DO</h3>
             <h5 style={{ color }}>{info[1]}</h5>
             <p>{info[2]}</p>
-            <Button title="Reach Out" />
+            <div className={styles.reachBtn}>
+              <Button title="Reach Out" />
+            </div>
+            
           </div>
         </div>
       </section>
@@ -158,7 +162,7 @@ function FellowshipsPage({ name, color, tag, showCellGroups, info, cellgroups, c
       <div className={styles.div_imgSection} style={{ backgroundColor: color }}>
         <Image src={brickOutline} alt="" aria-hidden="true" sizes="10vw" className={`${styles.outline} ${styles.outlineTL}`} />
         <Image src={brickOutline} alt="" aria-hidden="true" sizes="10vw" className={`${styles.outline} ${styles.outlineBR}`} />
-        img section
+        <GalleryFade images={fellowshipData?.galleryArray ?? []} />
       </div>
     </div>
   );

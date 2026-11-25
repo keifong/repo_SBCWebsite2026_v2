@@ -1,0 +1,42 @@
+.gallery {
+  --h: 25vw;
+  position: absolute;
+  inset: 0;              /* side inset keeps clear of the corner brick outlines */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;   /* matches FADE_MS */
+}
+.show { opacity: 1; }
+
+.row {
+  display: flex;
+  gap: 1vw;
+}
+.row:nth-child(1) .tile:nth-child(2) { transform: translateY(-3vw); }
+.row:nth-child(2) .tile:nth-child(1) { transform: translateY(3vw); }
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.8vw;
+  flex:none;
+  height: var(--h);
+}
+.landscape { width: calc(var(--h) * 1.5); }
+.portrait  { width: calc(var(--h) * 2 / 3); }
+
+.img { object-fit: cover; }
+
+/* @media (prefers-reduced-motion: reduce) {
+  .gallery { transition: none; }
+} */
+
+@media (max-width: 768px) {
+  .gallery { --h: 33vw; }                         /* bigger tiles fill the width, so less empty red */
+  .row:nth-child(1) { transform: translateX(-3vw); }
+  .row:nth-child(2) { transform: translateX(3vw); }
+}

@@ -6,7 +6,7 @@ function FellowshipsYouth() {
     return <FellowshipsPage name="Youth Fellowship" color="#254188" tag="youth" showCellGroups={false} 
     info={["Cell Group", "subtexttttt", "this is what we do asdfjalsdfjalskfjdalsdfjalskdfjalskdfjaslkdfjasldfkjaslkdfjalsdfkjaskdfjalskdjflaskfj", "attention! this is what i really want you to know asjdflashdfladshdfasdfhaskjfdaklsfjdadlskdfjalsdfjalskdfjalskdfjalskjdfalskdfjalskjdflaskdjflaskdfjalskjdfalskdfj", "more information alkdjflajoqwieruqoieuwoqruqwoireuqowirqowiruoqwiurqwiouroqwiruoqwiruqwoiruqwoiruoqwier"]}
     cellgroups={[]}
-    cgTexts={[]}
+    cgTexts={['This is the text for the youths.']}
     />
 }
 

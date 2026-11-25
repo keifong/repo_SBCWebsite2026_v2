@@ -4,9 +4,9 @@ import FellowshipsPage from '@/components/fellowshipPage/fellowshipsPage'
 
 function FellowshipsAdult() {
     return <FellowshipsPage name="Adult Cell Groups" color="#942636" tag="adult" showCellGroups={true} 
-    info={["Cell Group", "subtexttttt", "this is what we do asdfjalsdfjalskfjdalsdfjalskdfjalskdfjaslkdfjasldfkjaslkdfjalsdfkjaskdfjalskdjflaskfj", "attention! this is what i really want you to know asjdflashdfladshdfasdfhaskjfdaklsfjdadlskdfjalsdfjalskdfjalskdfjalskjdfalskdfjalskjdflaskdjflaskdfjalskjdfalskdfj", "more information alkdjflajoqwieruqoieuwoqruqwoireuqowirqowiruoqwiurqwiouroqwiruoqwiruqwoiruqwoiruoqwier"]}
-    cellgroups={["Deacon David", "Deacon Geok Hwee", "Sisters Fellowship"]}
-    cgTexts={["Deacon David cell group does xyzaklsdfjlasjfaskdjalskjfasdflaksdjlkfjaslkdfjas", "Deacon Geok Hwee cell group does aldjflaksdjfalskfjlsakdfjalskdfjla", "Sisters Fellowship comprises of women of all ages, they have done kjadflskjfalskjlsjflasjoierqoiroqwreoqwirqoireqwori"]}
+    info={["Cell Group", "subtexttttt", "this is what we do asdfjalsdfjalskfjdalsdfjalskdfjalskdfjaslkdfjasldfkjaslkdfjalsdfkjaskdfjalskdjflaskfj", "ATTENTION PLEASE: This is an important announcement!", "more information alkdjflajoqwieruqoieuwoqruqwoireuqowirqowiruoqwiurqwiouroqwiruoqwiruqwoiruqwoiruoqwier"]}
+    cellgroups={["Deacon David", "Deacon Geok Hwee", "David Ang", "Sisters Fellowship"]}
+    cgTexts={["Deacon David cell group does xyzaklsdfjlasjfaskdjalskjfasdflaksdjlkfjaslkdfjas", "Deacon Geok Hwee cell group does aldjflaksdjfalskfjlsakdfjalskdfjla", "David Ang cell group does...", "Sisters Fellowship comprises of women of all ages, they have done kjadflskjfalskjlsjflasjoierqoiroqwreoqwirqoireqwori"]}
     />
 }
 

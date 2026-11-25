@@ -6,6 +6,7 @@
     flex-direction: column;
     position: relative;
     flex-shrink: 0;
+    --content-w:80vw;
 }
 
 /* video contained here */
@@ -23,20 +24,16 @@
 }
 
 .heroVideo {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
-  pointer-events: none;
+  display: block;
 }
 
 .div_faTitle {
   align-items: center;
   justify-content: center;
-  margin-bottom: 2vw;
+  /* margin-bottom: 2vw; */
   position: relative;
   z-index: 1;
 }
@@ -44,14 +41,14 @@
 .div_faTitle h1 {
     margin: 0;
     font-family: 'Martel Sans Bold';
-    font-size: clamp(15px, 4vw, 120px);
+    font-size: clamp(15px, 3vw, 120px);
     padding-left: 2vw;
     padding-right: 2vw;
     background-color: #FFFFFF;
 }
 
 .belowBar {
-  padding: 2vw 0;
+  padding: 1vw 0 0;
   z-index: 10;
 }
 
@@ -61,39 +58,42 @@
     z-index: 0;
     width: 100%;
     color: #FFFFFF;
-    padding: 3vw;
+    padding: 2vw;
+    box-sizing: border-box;
+}
+
+.div_attentionAction h3 {
     font-family: 'Martel Sans Reg';
     font-size: clamp(15px, 1.2vw, 80px);
-    box-sizing: border-box;
+    margin: 0;           /* removes the default h3 margin, so padding controls the spacing */
+    font-weight: normal; /* h3 is bold by default; remove this line if you want it bold */
 }
 
 /* photos: remote images of any size fit one frame */
 .photoFrame {
   position: relative;
   width: 40vw;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   flex-shrink: 0;
 }
 .photo { object-fit: cover; }
 
-
 /* ---------------------------------- */
 
 .faInfo {
-    width: 100%;
-    padding-left: 10vw;
-    padding-right: 10vw;
-    margin: 2vw;
-    margin-top: 0;
-    /* justify-content: space-between; */
-    box-sizing: border-box;
-    align-items: stretch;
-    position:relative;
-    z-index: 1;
+  /* width: 100%; */
+  width: var(--content-w);
+  box-sizing: border-box;
+  /* margin: 0 0 2vw;*/
+  margin: 0 auto 2vw;
+  align-items: stretch;
+  position: relative;
+  z-index: 1;
 }
 
 .wwd {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-self: stretch;
@@ -118,7 +118,7 @@
 
 .wwd p {
     font-family: 'Martel Sans Reg';
-    font-size: clamp(15px, 1.2vw, 80px);
+    font-size: clamp(10px, 1.2vw, 80px);
     margin: 0;
     line-height: 1.3;
     width: 30vw;
@@ -126,43 +126,58 @@
     margin-bottom: 2vw;
 }
 
-
+.reachBtn {
+  display: flex;
+  justify-content: flex-start;  
+  position: relative;
+  z-index: 2; 
+}
 
 /* ---------------------------------------- */
 
 .cgBtnContainer {
-    margin: 2vw;
-    padding-bottom: 2vw;
-    margin-bottom: 0;
-    text-align: center;
-    background-color: #FFFFFF;
-    margin-left: 25vw;
-    margin-right: 25vw;
+    /* width: 100%; */
+    width: var(--content-w);
+    margin: 0 auto;
+    /* padding: 0 10vw 1vw; */
+    padding: 0 0 3vw;
+    text-align: left;
+    align-items: flex-start;
+    background-color: transparent;
+    box-sizing: border-box;
 }
 
 .cgBtnContainer h3 {
     font-family: 'Martel Sans Bold';
-    font-size: clamp(10px, 2.5vw, 100px);
-    margin-bottom: 0;
+    font-size: clamp(10px, 2vw, 100px);
+    text-transform: uppercase;
 }
 
 .div_faCGs {
-    padding-left: 10vw;
-    padding-right: 10vw;
+    width: 100%;
+    padding: 0;
+    gap: 1.5vw;
+    flex-wrap: nowrap;
     justify-content: space-between;
 }
 
 .div_CG_btn {
-    width: 10vw;
+    width: auto;
+    min-width: 10vw;
+    max-width: 50vw;
+    max-height: 5vw;
+    flex: 1 1 0;
+    aspect-ratio: 2 / 1;
+    border-radius: 1.5vw;
     padding: 1vw;
+    box-sizing: border-box;
     color: #FFFFFF;
     font-family: 'Martel Sans Reg';
     font-size: clamp(10px, 1.2vw, 50px);
+    place-items: center;
     text-align: center;
-    border-radius: 2vw;
-    align-items: center;
-    justify-content: center;
-    display: flex;
+    text-wrap: balance;
+    display: grid;
     line-height: 1.3;
     border: none;
     cursor: pointer;
@@ -174,6 +189,7 @@
 .div_CG_btn:hover {
     box-shadow: none;
     cursor: pointer;
+    text-align: center;
 }
 
 
@@ -182,21 +198,21 @@
 .div_imgSection {
     width: 100%;
     position: relative;
-    height: 20vw;
+    height: clamp(200px, 60vw, 1000vw);
     box-sizing: border-box;
     flex-shrink: 0;
 }
 
 
-
-/* ------------------------------ */
+/* -------------upcoming----------------- */
 
 .div_upcoming h3 {
     font-family: 'Martel Sans Bold';
-    font-size: clamp(15px, 2vw, 100px);
+    font-size: clamp(15px, 1.8vw, 100px);
      color: inherit;
     margin-left: 2vw;
     margin-bottom: 0;
+    text-transform: uppercase;
 }
 
 .div_upcomingSingle {
@@ -209,27 +225,29 @@
 }
 
 .div_upcomingSingle div {
-    min-height: 4vw;
+    min-height: 2vw;
 }
 
 .div_upcomingSingle h4 {
     font-family: 'Martel Sans Bold';
-    font-size: clamp(15px, 2vw, 80px);
+    font-size: clamp(15px, 1.3vw, 80px);
     margin: 0;
     line-height: 1.2;
 }
 
 .div_upcomingSingle p {
     font-family: 'Martel Sans Reg';
-    font-size: clamp(10px, 1.2vw, 50px);
+    font-size: clamp(10px, 1vw, 50px);
     margin: 0;
 }
+
 
 /* brick corners, one shared rule */
 .brick {
   position: absolute;
-  width: clamp(40px, 12vw, 200px);
-  height: auto;                        /* the important line, as with the logo */
+  width: auto;
+  max-width: 70%;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
 }
@@ -245,3 +263,96 @@
 }
 .outlineTL { top: 0; left: 0; }
 .outlineBR { bottom: 0; right: 0; }
+
+
+/* mobile */
+@media (max-width: 768px) {
+
+  /* ---------- Cell Groups row: stacked ---------- */
+  .fellowship_wrapper .faInfo {
+    flex-direction: column;
+    width: 90vw;
+    margin: 0 auto 4vw;
+  }
+
+  .fellowship_wrapper .faInfo .photoFrame {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .fellowship_wrapper .faInfo .wwd {
+    flex: none;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .fellowship_wrapper .faInfo .wwd p {
+    width: 100%;
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  /* ---------- Hero row: side by side (faInfoSide) ---------- */
+  .fellowship_wrapper .faInfo.faInfoSide {
+    flex-direction: row;
+  }
+
+  .fellowship_wrapper .faInfoSide .photoFrame {
+    width: 45%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .fellowship_wrapper .faInfoSide .wwd {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .fellowship_wrapper .faInfoSide .wwd p {
+    width: 100%;
+    margin-bottom: 0;
+    font-size: 15px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .fellowship_wrapper .faInfoSide .wwd h3 { font-size: 18px; }
+  .fellowship_wrapper .faInfoSide .wwd h5 { font-size: 15px; }
+
+  .fellowship_wrapper .faInfoSide .brick {
+    max-width: 40%;
+    opacity: 0.6;
+  }
+
+  .fellowship_wrapper .reachBtn {
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+
+  /* ---------- Cell group buttons ---------- */
+  .div_faCGs {
+    flex-wrap: wrap;             /* two buttons per row */
+    gap: 3vw;
+  }
+
+  .div_CG_btn {
+    flex: 1 1 calc(50% - 3vw);
+    min-width: 0;
+    max-width: none;
+    max-height: none;            /* removes the clipping risk */
+    aspect-ratio: auto;          /* height comes from the content */
+    min-height: 5vw;
+    padding: 12px;
+    font-size: 12px;
+    border-radius: 12px;
+  }
+
+  /* ---------- Upcoming cards ---------- */
+  .div_upcomingSingle {
+    width: 20vw;
+    padding: 3vw;
+    border-radius: 4vw;
+  }
+}
