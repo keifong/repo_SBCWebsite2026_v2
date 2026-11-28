@@ -91,59 +91,61 @@ async function Home() {
                         </div>
 
                         {/* Home buttons */}
-                        <div className={`div_row ${styles.div_btns_home}`}>
+                        <div className={styles.div_btnsContainer}>
+                            <div className={`div_row ${styles.div_btns_home}`}>
 
-                            <Link
-                                href="/leadership"
-                                className="link_btn"
-                            >
-                                <HomeButton
-                                    image={LeadershipBtn}
-                                    title="Pastoral Leadership"
-                                    subText="Learn More"
-                                />
-                            </Link>
-
-                            <Link
-                                href="/fellowshipsAdult"
-                                className="link_btn"
-                            >
-                                <HomeButton
-                                    image={FellowshipsBtn}
-                                    title="Fellowships"
-                                    subText="Learn More"
-                                />
-                            </Link>
-
-                                <HomeButton
-                                    image={ChoirBtn}
-                                    title="Choir"
-                                    subText="Learn More"
-                                />
-
-                            <Link
-                                href="/events"
-                                className="link_btn"
-                            >
-                                <HomeButton
-                                        image={EventsBtn}
-                                        title="Events"
+                                <Link
+                                    href="/leadership"
+                                    className="link_btn"
+                                >
+                                    <HomeButton
+                                        image={LeadershipBtn}
+                                        title="Pastoral Leadership"
                                         subText="Learn More"
                                     />
-                            </Link>
+                                </Link>
 
-                            <Link
-                                href="/aboutUs"
-                                className="link_btn"
-                            >
-                                <HomeButton
-                                    image={AUBtn}
-                                    title="About Us"
-                                    subText="Learn More"
-                                />
+                                <Link
+                                    href="/fellowshipsAdult"
+                                    className="link_btn"
+                                >
+                                    <HomeButton
+                                        image={FellowshipsBtn}
+                                        title="Fellowships"
+                                        subText="Learn More"
+                                    />
+                                </Link>
 
-                            </Link>
+                                    <HomeButton
+                                        image={ChoirBtn}
+                                        title="Choir"
+                                        subText="Learn More"
+                                    />
 
+                                <Link
+                                    href="/events"
+                                    className="link_btn"
+                                >
+                                    <HomeButton
+                                            image={EventsBtn}
+                                            title="Events"
+                                            subText="Learn More"
+                                        />
+                                </Link>
+
+                                <Link
+                                    href="/aboutUs"
+                                    className="link_btn"
+                                >
+                                    <HomeButton
+                                        image={AUBtn}
+                                        title="About Us"
+                                        subText="Learn More"
+                                    />
+
+                                </Link>
+
+                            </div>
                         </div>
 
                     </div>
