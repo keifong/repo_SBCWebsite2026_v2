@@ -1,11 +1,11 @@
-    .navbar {
+.navbar {
     display: flex;
     height: 4vw;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding-inline: 1vw;
-
+    color:#fff;
     z-index: 10000;
     width: 100%;
     box-sizing: border-box;
@@ -19,94 +19,202 @@
     transition: transform 0.25s ease-in-out;
 }
 
-.navbar_visible {
-    transform: translateY(0);
-}
-
-.navbar_hidden {
-    transform: translateY(-100%);
-}
-
+.navbar_visible { transform: translateY(0); }
+.navbar_hidden  { transform: translateY(-100%); }
 
 /* Logo */
-
 .link_logo {
     display: flex;
     align-items: center;
-    height: 100%;            /* same height as the navbar */
+    height: 100%;
 }
 
 .img_logo {
-    height: 80%;             /* a little breathing room inside the navbar */
-    width: auto;             /* width follows the aspect ratio */
+    height: 80%;
+    width: auto;
     max-width: none;
-    /* no more position: absolute */
 }
 
-
 /* Navigation */
+.navbarNav {
+    display: flex;
+    gap: 1rem;
+}
 
 .navbarNav h4 {
     margin: 0;
     padding: 0;
     position: relative;
-    color: white;
 }
 
-
-/* Fellowship Dropdown */
-
+/* Fellowship dropdown */
 .div_fellowshipDropdown {
     position: absolute;
     width: 20vw;
     padding: 1vw;
-
     background-color: bisque;
-
     gap: 0.5vw;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-
     z-index: 100;
-
     color: black;
     font-family: 'Martel Sans Bold';
     font-size: clamp(10px, 1vw, 50px);
 }
 
-
 /* Links */
-
 .link_btn {
     text-decoration: none;
     color: inherit;
     transition: 0.1s ease-in-out;
     display: inline-block;
     width: fit-content;
-    color:white;
-    transition: 0.1s ease-in-out;
 }
 
-.link_btn:hover {
-    color: #fff3f3;
-    transform: scale(1.05);
-}
+.link_btn:hover { color: #37393A; }
+.navbarNav > .link_btn:hover { color: #ddd; }
 
-.flink_btn {
-    text-decoration: none;
-    color: inherit;
-    transition: 0.1s ease-in-out;
-    display: inline-block;
-    width: fit-content;
-    color:black;
-    transition: 0.1s ease-in-out;
-}
+/* ---------- mobile drawer (hidden on desktop) ---------- */
+.menuBtn,
+.backdrop,
+.drawer { display: none; }
 
-.flink_btn:hover {
-    color: #37393A;
-    transform: scale(1.05);
+@media (max-width: 768px) {
+    .navbar {
+        height: 56px;
+        padding-inline: 12px;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .navbarNav { display: none; }
+
+    .menuBtn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        padding: 0 11px;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        position: absolute;
+        top: 6px;                 /* (56px bar - 44px button) / 2 */
+        touch-action: none;       /* lets the finger drag the button instead of scrolling */
+        user-select: none;
+    }
+    .menuBtn span {
+        height: 2px;
+        background: #333;
+        border-radius: 2px;
+    }
+
+    .backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 10001;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .drawer {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 130px;                  /* matches DRAWER_W in the TSX */
+        max-height: 100vh;
+        z-index: 10002;
+        padding: 8px 12px;
+        background: #fff;
+        color: #000;
+        border-radius: 0 10px 10px 0;
+        transform: translateX(-130px); /* matches DRAWER_W */
+        visibility: hidden;
+        will-change: transform;
+        overflow-y: auto;
+        font-family: 'Martel Sans Bold';
+    }
+
+    .drawerRight {
+        left: auto;
+        right: 0;
+        border-radius: 10px 0 0 10px;
+    }
+
+    .drawer a,
+    .drawerHeading {
+        padding: 8px 0;
+        font-size: 14px;
+        color: #000;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* the Fellowships row is now a button, so reset its default styling */
+    .drawerHeading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background: none;
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        font-family: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .chevron {
+        font-size: 12px;
+        transition: transform 0.2s ease;
+    }
+    .chevronOpen { transform: rotate(180deg); }
+
+    /* collapsible list: animates between 0 and its natural height */
+    .subWrap {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.25s ease;
+    }
+    .subWrapOpen { grid-template-rows: 1fr; }
+    .subInner {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .drawer a.sub {
+        padding: 6px 0 6px 10px;
+        font-family: 'Martel Sans Reg';
+        font-size: 13px;
+        border-bottom: none;
+    }
+
+    .drawer a.drawerLogo {
+        padding: 4px 0 10px;
+    }
+
+    .link_logo {
+        display: none;
+    }
+
+    .img_logo {
+        height: 56%;
+    }
+
+    .drawerLogoImg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
 }

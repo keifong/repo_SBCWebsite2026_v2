@@ -26,9 +26,9 @@
 }
 
 @media (max-width: 700px) {
-    .img_bg {
+    /* .img_bg {
         display: none;
-    }
+    } */
 
     .div_home_2nd {
         margin-top: 5vh;
