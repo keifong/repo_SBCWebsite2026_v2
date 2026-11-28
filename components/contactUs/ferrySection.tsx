@@ -1,7 +1,10 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Button from "@/components/button/button";
 import styles from "./ferrySection.module.css";
-import SectionNav from "@/components/sectionNav/sectionNav";
 
 export interface ContactPerson {
     title: string;
@@ -52,15 +55,40 @@ type FerrySectionProps = {
     id?: string;
     drivers: ContactPerson[];
     ferryDetails?: ContactPerson;
+    onSeekHelp?: () => void;
 };
 
-function FerrySection({id, drivers, ferryDetails }: FerrySectionProps) {
+function FerrySection({id, drivers, ferryDetails, onSeekHelp }: FerrySectionProps) {
+
+    const [zoom, setZoom] = useState<{ src: string; alt: string } | null>(null);
+    const closeRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        if (!zoom) return;
+
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setZoom(null);
+        };
+
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";   // stops the page scrolling behind the popup
+        document.addEventListener("keydown", onKey);
+        closeRef.current?.focus();
+
+        return () => {
+            document.body.style.overflow = prevOverflow;
+            document.removeEventListener("keydown", onKey);
+        };
+    }, [zoom]);
+
     return (
         <div id={id} className={`div_column ${styles.div_directions}`}>
             <div className={`div_column ${styles.div_sundayFerry}`}>
                 <div className={styles.ferryTitle}>
                     <h2>Sunday Service Ferry</h2>
-                    <Button title="SEEK HELP" />
+                    <div className={styles.seekHelpWrap} onClick={onSeekHelp}>
+                        <Button title="SEEK HELP" />
+                    </div>
                 </div>
 
                 <div className={styles.div_drivers}>
@@ -110,7 +138,7 @@ function FerrySection({id, drivers, ferryDetails }: FerrySectionProps) {
                                         loading="lazy"
                                     />
 
-                                    <div className="div_row">
+                                    <div className={styles.locDeets}>
                                         {photo && (
                                             <Image
                                                 className={styles.img_pickupLocations}
@@ -118,6 +146,16 @@ function FerrySection({id, drivers, ferryDetails }: FerrySectionProps) {
                                                 alt={pickup.alt}
                                                 width={200}
                                                 height={150}
+                                                role="button"
+                                                tabIndex={0}
+                                                aria-label={`Enlarge photo: ${pickup.alt}`}
+                                                onClick={() => setZoom({ src: photo, alt: pickup.alt })}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter" || e.key === " ") {
+                                                        e.preventDefault();
+                                                        setZoom({ src: photo, alt: pickup.alt });
+                                                    }
+                                                }}
                                             />
                                         )}
 
@@ -129,6 +167,25 @@ function FerrySection({id, drivers, ferryDetails }: FerrySectionProps) {
                     </div>
                 )}
             </div>
+            {zoom &&
+              createPortal(
+                  <div className={styles.lightbox} role="dialog" aria-modal="true" aria-label={zoom.alt} onClick={() => setZoom(null)}>
+                      <button
+                          ref={closeRef}
+                          type="button"
+                          className={styles.lightboxClose}
+                          aria-label="Close photo"
+                          onClick={() => setZoom(null)}
+                      >
+                          ×
+                      </button>
+
+                      <div className={styles.lightboxFrame} onClick={(e) => e.stopPropagation()}>
+                          <Image src={zoom.src} alt={zoom.alt} fill sizes="80vw" className={styles.lightboxImg} />
+                      </div>
+                  </div>,
+                  document.body
+              )}
         </div>
     );
 }

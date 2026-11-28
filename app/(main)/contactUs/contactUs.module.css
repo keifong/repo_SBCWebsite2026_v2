@@ -219,7 +219,7 @@
 .form_input {
     flex: 1;
     background-color: #FFFFFF;
-    border: 0.15vw solid #942636;
+    border: max(2px, 0.15vw) solid #942636;
     padding: 0.5rem;
     font-size: clamp(15px, 1.2vw, 50px);
     font-family: 'Martel Sans Light';
@@ -227,9 +227,28 @@
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
+.form_input_valid {
+    border-color: #2E7D4F;
+}
+
+.form_input_invalid {
+    border-color: #A41216;
+}
+
 .form_input::placeholder {
     color: #5A1717;
     opacity: 1;
+}
+
+.form_textarea {
+    flex: none;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 15em;
+    field-sizing: content;
+    resize: vertical;
+    font-size: clamp(13px, 1.2vw, 25px);
+    line-height: 1.4;
 }
 
 .maps {

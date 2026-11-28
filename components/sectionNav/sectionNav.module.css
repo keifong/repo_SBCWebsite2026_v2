@@ -3,10 +3,10 @@
     position: fixed;
     top: 50%;
     right: 0;
-    z-index: 900;                 /* below your navbar (10000) and mobile drawer */
+    z-index: 900;
     display: flex;
     align-items: center;
-    transform: translate(var(--panel-w), -50%);   /* closed: only the tab shows */
+    transform: translate(var(--panel-w), -50%);
     transition: transform 0.3s ease;
 }
 
@@ -18,7 +18,7 @@
     writing-mode: vertical-rl;
     padding: 14px 8px;
     border: none;
-    border-radius: 10px 0 0 10px;
+    border-radius: 2px 0 0 2px;
     background: rgba(148, 38, 54, 0.92);
     color: #FFFFFF;
     font-family: 'Martel Sans Bold';
@@ -36,7 +36,7 @@
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.2);
-    visibility: hidden;                          /* keeps it out of tab order while closed */
+    visibility: hidden;
     transition: visibility 0s linear 0.3s;
 }
 

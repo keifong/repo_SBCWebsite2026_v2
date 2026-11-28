@@ -5,9 +5,8 @@ import Button from "@/components/button/button";
 import FerrySection, { type ContactPerson } from "@/components/contactUs/ferrySection";
 import Image from "next/image";
 import brickWall from "@/public/brickWall.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import SectionNav from "@/components/sectionNav/sectionNav";
-
 // ---------------------------------------------
 // Types
 // ---------------------------------------------
@@ -33,6 +32,17 @@ const LINE_COLORS: Record<string, string> = {
 };
 const lineColor = (code: string) => LINE_COLORS[code.slice(0, 2)] ?? "#942636";
 
+const FERRY_MESSAGE = `Hello Singapore Baptist Church,
+
+I would like more information regarding the Sunday Service Ferry and if I qualify for it. Please reach out to me.
+
+Thank you
+
+Regards!`;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^\+?\d{8,15}$/;
+const NAV_OFFSET = 70;
 
 function ContactUs() {
     const [cuData, setCuData] = useState<ContactPerson[]>([]);
@@ -46,7 +56,7 @@ function ContactUs() {
     });
 
     const [submitting, setSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+    const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error" | "invalid">("idle");
 
     // ---------------------------------------------
     // Fetch contact/ferry data
@@ -79,9 +89,9 @@ function ContactUs() {
 
     const ferryDetails = cuData.find((person) => person.title === "FerryDetails");
     const sections = [
-        ...(cuData.length > 1 ? [{ id: "team", label: "Our Team" }] : []),
-        { id: "contact", label: "Contact & Location" },
-        ...(cuData.length > 1 ? [{ id: "ferry", label: "Sunday Ferry" }] : []),
+        ...(cuData.length > 1 ? [{ id: "team", label: "Our Contact" }] : []),
+        { id: "contact", label: "Email & Location" },
+        ...(cuData.length > 1 ? [{ id: "ferry", label: "Sunday Service Ferry" }] : []),
     ];
     // ---------------------------------------------
     // Form handlers
@@ -90,14 +100,16 @@ function ContactUs() {
     const handleFormChange =
         (field: keyof ContactFormData) =>
         (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            setForm((prev) => ({
-                ...prev,
-                [field]: e.target.value,
-            }));
+            setForm((prev) => ({ ...prev, [field]: e.target.value }));
+            setSubmitStatus((s) => (s === "invalid" ? "idle" : s));
         };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!formValid) {
+            setSubmitStatus("invalid");
+            return;
+        }
 
         setSubmitting(true);
         setSubmitStatus("idle");
@@ -129,6 +141,31 @@ function ContactUs() {
         } finally {
             setSubmitting(false);
         }
+    };
+
+    const nameRef = useRef<HTMLInputElement>(null);
+    const nameOk = form.name.trim().length > 0;
+    const emailOk = EMAIL_RE.test(form.email.trim());
+    const phoneOk = PHONE_RE.test(form.phone.replace(/[\s\-()]/g, ""));
+    const messageOk = form.message.trim().length > 0;
+    const formValid = nameOk && emailOk && phoneOk && messageOk;
+
+    const inputClass = (ok: boolean) =>
+    `${styles.form_input} ${ok ? styles.form_input_valid : styles.form_input_invalid}`;
+
+    const handleSeekHelp = () => {
+        setForm((prev) => ({ ...prev, message: FERRY_MESSAGE }));
+        setSubmitStatus("idle");
+
+        const target = document.getElementById("contact");
+        if (!target) return;
+
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const top = target.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+        window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+
+        // after the scroll, put the cursor in the Name box
+        window.setTimeout(() => nameRef.current?.focus({ preventScroll: true }), 600);
     };
 
     if (loading) {
@@ -213,37 +250,44 @@ function ContactUs() {
                     </div>
 
                     <div className={`div_column ${styles.div_secondaryWrap}`}>
-                        <form className={styles.form_contactUs} onSubmit={handleSubmit}>
+                        <form className={styles.form_contactUs} onSubmit={handleSubmit} noValidate>
                             <div className={`div_row ${styles.div_fnamefemail}`}>
                                 <input
-                                    className={styles.form_input}
+                                    ref={nameRef}
+                                    className={inputClass(nameOk)}
                                     type="text"
                                     placeholder="Name"
                                     required
+                                    aria-invalid={!nameOk}
                                     value={form.name}
                                     onChange={handleFormChange("name")}
                                 />
 
                                 <input
-                                    className={styles.form_input}
+                                    className={inputClass(emailOk)}
                                     type="email"
                                     placeholder="Email"
                                     required
+                                    aria-invalid={!emailOk}
                                     value={form.email}
                                     onChange={handleFormChange("email")}
                                 />
                             </div>
 
                             <input
-                                className={styles.form_input}
+                                className={inputClass(phoneOk)}
                                 type="tel"
+                                inputMode="tel"
+                                autoComplete="tel"
                                 placeholder="Contact Number"
+                                required
+                                aria-invalid={!phoneOk}
                                 value={form.phone}
                                 onChange={handleFormChange("phone")}
                             />
 
                             <textarea
-                                className={styles.form_input}
+                                className={`${styles.form_input} ${styles.form_textarea}`}
                                 placeholder="Message"
                                 required
                                 value={form.message}
@@ -261,6 +305,11 @@ function ContactUs() {
                             {submitStatus === "error" && (
                                 <p className="form_status form_status_error">
                                     Something went wrong. Please try again.
+                                </p>
+                            )}
+                            {submitStatus === "invalid" && (
+                                <p className="form_status form_status_error">
+                                    Please fill in your name, a valid email and a valid contact number.
                                 </p>
                             )}
                         </form>
@@ -316,7 +365,7 @@ function ContactUs() {
             --------------------------------------------- */}
 
             {cuData.length > 1 && (
-                <FerrySection id="ferry" drivers={cuData.slice(2, 5)} ferryDetails={ferryDetails} />
+                <FerrySection id="ferry" drivers={cuData.slice(2, 5)} ferryDetails={ferryDetails} onSeekHelp={handleSeekHelp}/>
             )}
 
             <SectionNav sections={sections} />
